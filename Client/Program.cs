@@ -1,4 +1,4 @@
-using Client.Infrastructure;
+using SeasonVoting.Client.Infrastructure;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,7 +6,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Client
+namespace SeasonVoting.Client
 {
     public class Program
     {

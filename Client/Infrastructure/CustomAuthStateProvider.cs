@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 
-namespace Client.Infrastructure
+namespace SeasonVoting.Client.Infrastructure
 {
     public class CustomAuthStateProvider : AuthenticationStateProvider
     {

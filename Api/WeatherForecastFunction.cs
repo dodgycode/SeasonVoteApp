@@ -7,7 +7,7 @@ using SeasonVoteApp.Shared;
 using System;
 using System.Linq;
 
-namespace Api
+namespace SeasonVoting.Api
 {
     public static class WeatherForecastFunction
     {

@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Client.Infrastructure
+namespace SeasonVoting.Client.Infrastructure
 {
     public class TestAuthStateProvider : AuthenticationStateProvider
     {
