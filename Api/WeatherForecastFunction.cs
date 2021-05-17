@@ -32,7 +32,7 @@ namespace SeasonVoting.Api
             return summary;
         }
 
-        [Authorize]
+        [Authorize(Roles ="SiteOwner")]
         [FunctionName("WeatherForecast")]
         public static IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
