@@ -10,6 +10,7 @@ using System.Linq;
 
 namespace SeasonVoting.Api
 {
+    [Authorize(Roles = "SiteOwner")]
     public static class WeatherForecastFunction
     {
         private static string GetSummary(int temp)
@@ -32,7 +33,6 @@ namespace SeasonVoting.Api
             return summary;
         }
 
-        [Authorize(Roles ="SiteOwner")]
         [FunctionName("WeatherForecast")]
         public static IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
