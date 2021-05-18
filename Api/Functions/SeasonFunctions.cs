@@ -16,14 +16,15 @@ namespace SeasonVoting.Api.Functions
 {
     public static class SeasonFunctions
     {
+        #region Functions
         [FunctionName("GetCurrentSeason")]
         public static IActionResult GetCurrentSeason(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req, ILogger log)
+           [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req, ILogger log)
         {
             var service = new SeasonRepository();
-            var seasons =  service.GetAllIncomplete();
+            var seasons = service.GetAllIncomplete();
             var now = DateTime.UtcNow;
-            var currentSeason = seasons.OrderBy(s=>s.StartDate).FirstOrDefault();
+            var currentSeason = seasons.OrderBy(s => s.StartDate).FirstOrDefault();
             if (currentSeason != null)
             {
                 var vm = ToViewModel(currentSeason);
@@ -38,15 +39,15 @@ namespace SeasonVoting.Api.Functions
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req, ILogger log)
         {
             var service = new SeasonRepository();
-            var seasons =  service.GetAll();
+            var seasons = service.GetAll();
             var now = DateTime.UtcNow;
-            var lastSeason = seasons.OrderByDescending(s=>s.EndDate).FirstOrDefault(s => s.IsComplete);
+            var lastSeason = seasons.OrderByDescending(s => s.EndDate).FirstOrDefault(s => s.IsComplete);
             var seasonVm = new SeasonViewModel { StartDate = DateTime.UtcNow, IsComplete = false };
             if (lastSeason != null)
             {
                 seasonVm.StartDate = lastSeason.EndDate;
             }
-            seasonVm.EndDate = lastSeason.EndDate.AddDays(84); // 12 weeks
+            seasonVm.EndDate = lastSeason.EndDate.AddDays(91); // 13 weeks
 
             return new OkObjectResult(seasonVm);
         }
@@ -79,6 +80,10 @@ namespace SeasonVoting.Api.Functions
             return new OkResult();
         }
 
+        #endregion
+
+        #region Private Methods
+
         private static SeasonViewModel ToViewModel(Season season)
         {
             return new SeasonViewModel
@@ -101,5 +106,7 @@ namespace SeasonVoting.Api.Functions
                 IsComplete = vm.IsComplete
             };
         }
+
+        #endregion
     }
 }

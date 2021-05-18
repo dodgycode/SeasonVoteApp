@@ -1,0 +1,44 @@
+﻿@page "/tracks"
+@using SeasonVoting.Shared
+@inject HttpClient Http
+
+
+
+@if (tracks != null)
+{
+    foreach(var track in tracks)
+                {
+                    <p>Name: @track.Name</p>
+                    <p>Number of variants: @track.NumberOfVariants</p>
+                    <a href="@track.Url">View track details</a>
+                }
+}
+else
+{
+    <h1>No tracks exist</h1>
+}
+
+
+
+@code {
+    private TrackViewModel[] tracks;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetTracks();
+    }
+
+    private async Task GetTracks()
+    {
+
+        try
+        {
+            tracks = await Http.GetFromJsonAsync<TrackViewModel[]>("/api/GetAllTracks");
+        }
+        catch (Exception ex)
+        {
+            tracks = null;
+            Console.WriteLine(ex.ToString());
+        }
+    }
+}
