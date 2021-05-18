@@ -1,16 +1,6 @@
 ﻿@page "/"
 @inject HttpClient Http
 
-<AuthorizeView>
-    <Authorized>
-        <p>Welcome @context.User.Identity.Name</p>
-    </Authorized>
-    <NotAuthorized>
-        <p>You're not signed in.</p>
-    </NotAuthorized>
-</AuthorizeView>
-
-
 @if (season != null)
 {
     <h1>Current Season is @season.Name</h1>
@@ -19,7 +9,6 @@ else
 {
     <h1>No season is currently active</h1>
 }
-
 
 @code {
     private SeasonViewModel season;
