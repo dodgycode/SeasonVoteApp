@@ -1,0 +1,44 @@
+﻿@page "/season"
+@using SeasonVoting.Shared
+@inject HttpClient Http
+
+
+
+@if (season != null)
+{
+    <h1>Current Season is @season.Name</h1>
+    <p>Do you want to close the current season?</p>
+    <button onclick="@FinishSeason()">Finish Season</button>
+}
+else
+{
+    <h1>No season is currently active</h1>
+}
+
+@code {
+    private SeasonViewModel season;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            season = await Http.GetFromJsonAsync<SeasonViewModel>("/api/CurrentSeason");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+    }
+
+    private async Task FinishSeason()
+    {
+        try
+        {
+            await Http.PostAsJsonAsync("/api/FinishCurrentSeason",season.Id);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+    }
+}

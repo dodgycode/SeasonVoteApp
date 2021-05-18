@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using SeasonVoting.Api.Models;
 using System;
 using System.Collections.Generic;
@@ -14,31 +15,26 @@ namespace SeasonVoting.Api.Repositories
             _season = Database.GetCollection<Season>(CollectionNames.Season);
         }
 
-        public async Task<List<Season>> GetAllAsync()
-        {
-            return await _season.Find(c => true).ToListAsync();
-        }
-
         public List<Season> GetAll()
         {
             return _season.Find(c => true).ToList();
         }
-        public async Task<Season> GetByIdAsync(string id)
+        public Season GetById(ObjectId id)
         {
-            return await _season.Find(c => c.Id == id).FirstOrDefaultAsync();
+            return  _season.Find(c => c.Id == id).FirstOrDefault();
         }
-        public async Task<Season> CreateAsync(Season customer)
+        public Season Create(Season customer)
         {
-            await _season.InsertOneAsync(customer);
+            _season.InsertOne(customer);
             return customer;
         }
-        public async Task UpdateAsync(string id, Season customer)
+        public void Update(ObjectId id, Season customer)
         {
-            await _season.ReplaceOneAsync(c => c.Id == id, customer);
+            _season.ReplaceOne(c => c.Id == id, customer);
         }
-        public async Task DeleteAsync(string id)
+        public void Delete(ObjectId id)
         {
-            await _season.DeleteOneAsync(c => c.Id == id);
+            _season.DeleteOne(c => c.Id == id);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using MongoDB.Driver;
-using SeasonVoting.Api.Models;
 
 namespace SeasonVoting.Api.Repositories
 {
@@ -7,10 +6,12 @@ namespace SeasonVoting.Api.Repositories
     {
         protected MongoClient Client { get; }
         protected IMongoDatabase Database { get; }
+
         public RepositoryBase()
         {
             Client = new MongoClient(DbConnection.ConnectionString);
             Database = Client.GetDatabase(DbConnection.DatabaseName);
         }
+
     }
 }

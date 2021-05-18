@@ -5,4 +5,8 @@
     <RootNamespace>SeasonVoting.Shared</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Bson" Version="2.12.3" />
+  </ItemGroup>
+
 </Project>
