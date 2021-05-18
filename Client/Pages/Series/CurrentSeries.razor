@@ -1,0 +1,44 @@
+﻿@page "/currentseries"
+@inject HttpClient Http
+
+    <h2>Current Series</h2>
+
+    @if (currentSeries != null)
+    {
+        foreach (var series in currentSeries)
+        {
+            <MatCard>
+                <MatCardContent>
+                    <MatBlazor.MatHeadline6>@series.Name</MatBlazor.MatHeadline6>
+                    <MatBody1>@series.Description</MatBody1>
+                </MatCardContent>
+                <MatCardActions>
+                    <MatButton>View</MatButton>
+                </MatCardActions>
+            </MatCard>
+        }
+    }
+    <MatButtonLink href="addseries">Add a new Series</MatButtonLink>
+
+    @code {
+        private List<SeriesViewModel> currentSeries;
+
+        protected override async Task OnInitializedAsync()
+        {
+            await GetCurrentSeries();
+        }
+
+        private async Task GetCurrentSeries()
+        {
+
+            try
+            {
+                currentSeries = await Http.GetFromJsonAsync<List<SeriesViewModel>>("/api/GetCurrentSeries");
+            }
+            catch (Exception ex)
+            {
+                currentSeries = null;
+                Console.WriteLine(ex.ToString());
+            }
+        }
+    }

@@ -3,6 +3,7 @@ using MongoDB.Driver;
 using SeasonVoting.Api.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SeasonVoting.Api.Repositories
@@ -18,6 +19,13 @@ namespace SeasonVoting.Api.Repositories
         public List<Season> GetAll()
         {
             return _season.Find(c => true).ToList();
+        }
+
+        public Season GetCurrentSeason()
+        {
+            var seasons = GetAllIncomplete();
+            var now = DateTime.UtcNow;
+            return seasons.OrderBy(s => s.StartDate).FirstOrDefault();
         }
 
         public List<Season> GetAllIncomplete()

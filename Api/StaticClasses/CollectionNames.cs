@@ -4,5 +4,6 @@
     {
         public const string Season = "season";
         public const string Track = "track";
+        public const string Series = "series";
     }
 }

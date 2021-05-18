@@ -1,0 +1,63 @@
+﻿@page "/AddSeries"
+@inject HttpClient Http
+@inject NavigationManager NavManager
+
+<h2>Add a new Series</h2>
+<EditForm Model="@series">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <p>
+        <label>
+            Name:
+            <InputText @bind-Value="series.Name" />
+        </label>
+    </p>
+    <p>
+        <label>
+            Description:
+            <MatInputTextComponent @bind-Value="series.Description" />
+        </label>
+    </p>
+
+    <MatButton Raised="true" class="btn btn-primary" @onclick="AddNewSeries">Add</MatButton>
+
+</EditForm>
+
+
+@code {
+    private SeriesViewModel series = new SeriesViewModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ConstructSeries();
+    }
+
+    private void AddNewSeries()
+    {
+        try
+        {
+            Http.PostAsJsonAsync("/api/AddSeries", series);
+            NavManager.NavigateTo("/currentseries", true);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+    }
+
+    private async Task ConstructSeries()
+    {
+        try
+        {
+            series = await Http.GetFromJsonAsync<SeriesViewModel>("/api/ConstructSeries");
+        }
+        catch (Exception ex)
+        {
+            series = null;
+            Console.WriteLine(ex.ToString());
+        }
+    }
+
+
+}

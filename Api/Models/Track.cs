@@ -21,7 +21,6 @@ namespace SeasonVoting.Api.Models
         [BsonRepresentation(BsonType.Int32)]
         public TrackAvailability TrackAvailability { get; set; }
 
-        [BsonRepresentation(BsonType.Array)]
         public List<TrackVariant> Variants { get; set; }
     }
 }

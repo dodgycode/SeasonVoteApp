@@ -19,7 +19,6 @@ namespace SeasonVoting.Api.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId SeasonId { get; set; }
 
-        [BsonRepresentation(BsonType.Array)]
         public List<TrackTier> TrackTiers { get; set; }
     }
 }

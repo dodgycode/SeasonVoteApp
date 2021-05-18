@@ -1,23 +1,18 @@
 ﻿@page "/season"
-@using SeasonVoting.Shared
 @inject HttpClient Http
 
-
+<h2>Current Season</h2>
 
 @if (currentSeason != null)
 {
-    <h1>Current Season is @currentSeason.Name</h1>
-    <p>Do you want to close the current season?</p>
-    <MatButton class="btn btn-primary" Raised="true" @onclick="CompleteSeason">Complete Season</MatButton>
+    <p>Current Season is @currentSeason.Name</p>
+    <MatButton Raised="true" @onclick="CompleteSeason">Complete Season</MatButton>
 }
 else
 {
-    <h1>No season is currently active</h1>
-
-    <a href="addseason">Add a new Season</a>
+    <p>No season is currently active</p>
+    <MatButtonLink href="addseason">Add a new Season</MatButtonLink>
 }
-
-
 
 @code {
     private SeasonViewModel currentSeason;
@@ -53,4 +48,5 @@ else
             Console.WriteLine(ex.ToString());
         }
     }
+
 }

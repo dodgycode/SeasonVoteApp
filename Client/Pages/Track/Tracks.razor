@@ -3,15 +3,23 @@
 @inject HttpClient Http
 
 
+<h2>Tracks</h2>
 
 @if (tracks != null)
 {
-    foreach(var track in tracks)
-                {
-                    <p>Name: @track.Name</p>
-                    <p>Number of variants: @track.NumberOfVariants</p>
-                    <a href="@track.Url">View track details</a>
-                }
+    foreach (var track in tracks)
+    {
+        <MatCard>
+            <MatCardContent>
+                <MatBlazor.MatHeadline6>@track.Name</MatBlazor.MatHeadline6>
+                <MatSubtitle1>@track.Availability</MatSubtitle1>
+                <MatSubtitle2>@track.NumberOfVariants layouts</MatSubtitle2>
+            </MatCardContent>
+            <MatCardActions>
+                <MatButton href="@track.Url">View Details</MatButton>
+            </MatCardActions>
+        </MatCard>
+    }
 }
 else
 {

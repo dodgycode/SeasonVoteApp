@@ -55,7 +55,6 @@
 
     private async Task GetDefaultNextSeason()
     {
-
         try
         {
             season = await Http.GetFromJsonAsync<SeasonViewModel>("/api/GetDefaultNextSeason");

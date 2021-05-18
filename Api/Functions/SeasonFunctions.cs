@@ -22,9 +22,7 @@ namespace SeasonVoting.Api.Functions
            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req, ILogger log)
         {
             var service = new SeasonRepository();
-            var seasons = service.GetAllIncomplete();
-            var now = DateTime.UtcNow;
-            var currentSeason = seasons.OrderBy(s => s.StartDate).FirstOrDefault();
+            var currentSeason = service.GetCurrentSeason();
             if (currentSeason != null)
             {
                 var vm = ToViewModel(currentSeason);
