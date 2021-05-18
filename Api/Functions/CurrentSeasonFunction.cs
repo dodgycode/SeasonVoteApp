@@ -25,7 +25,7 @@ namespace SeasonVoting.Api.Functions
             var currentSeason = seasons.FirstOrDefault(s => s.StartDate <= now && !s.IsComplete);
             if (currentSeason != null)
             {
-                var vm = new SeasonViewModel {Id= currentSeason.Id, Name = currentSeason.Name };
+                var vm = new SeasonViewModel { Id = currentSeason.Id.ToString(), Name = currentSeason.Name };
                 return new OkObjectResult(vm);
             }
 
@@ -37,7 +37,8 @@ namespace SeasonVoting.Api.Functions
         [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req, ILogger log)
         {
             var content = new StreamReader(req.Body).ReadToEnd();
-            var id = JsonConvert.DeserializeObject<ObjectId>(content);
+            var obj = JsonConvert.DeserializeObject<string>(content);
+            var id = new ObjectId(obj);
 
             var service = new SeasonRepository();
             var season = service.GetById(id);

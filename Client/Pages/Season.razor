@@ -8,7 +8,7 @@
 {
     <h1>Current Season is @season.Name</h1>
     <p>Do you want to close the current season?</p>
-    <button onclick="@FinishSeason()">Finish Season</button>
+    <button @onclick="FinishSeason">Finish Season</button>
 }
 else
 {
@@ -20,9 +20,15 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        await GetCurrentSeason();
+    }
+
+    private async Task FinishSeason()
+    {
         try
         {
-            season = await Http.GetFromJsonAsync<SeasonViewModel>("/api/CurrentSeason");
+            await Http.PostAsJsonAsync("/api/FinishCurrentSeason", season.Id);
+            await GetCurrentSeason();
         }
         catch (Exception ex)
         {
@@ -30,14 +36,16 @@ else
         }
     }
 
-    private async Task FinishSeason()
+    private async Task GetCurrentSeason()
     {
+
         try
         {
-            await Http.PostAsJsonAsync("/api/FinishCurrentSeason",season.Id);
+            season = await Http.GetFromJsonAsync<SeasonViewModel>("/api/CurrentSeason");
         }
         catch (Exception ex)
         {
+            season = null;
             Console.WriteLine(ex.ToString());
         }
     }

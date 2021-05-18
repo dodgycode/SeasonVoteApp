@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -10,7 +9,6 @@ using System.Linq;
 
 namespace SeasonVoting.Api.Functions
 {
-    [Authorize(Roles = "SiteOwner")]
     public static class WeatherForecastFunction
     {
         private static string GetSummary(int temp)

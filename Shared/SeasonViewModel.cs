@@ -1,10 +1,8 @@
-﻿using MongoDB.Bson;
-
-namespace SeasonVoting.Shared
+﻿namespace SeasonVoting.Shared
 {
     public class SeasonViewModel
     {
-        public ObjectId Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
     }
 }
