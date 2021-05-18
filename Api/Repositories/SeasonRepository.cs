@@ -19,6 +19,12 @@ namespace SeasonVoting.Api.Repositories
         {
             return _season.Find(c => true).ToList();
         }
+
+        public List<Season> GetAllIncomplete()
+        {
+            return _season.Find(c => !c.IsComplete).ToList();
+        }
+
         public Season GetById(ObjectId id)
         {
             return  _season.Find(c => c.Id == id).FirstOrDefault();

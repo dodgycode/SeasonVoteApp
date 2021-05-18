@@ -4,30 +4,34 @@
 
 
 
-@if (season != null)
+@if (currentSeason != null)
 {
-    <h1>Current Season is @season.Name</h1>
+    <h1>Current Season is @currentSeason.Name</h1>
     <p>Do you want to close the current season?</p>
-    <button @onclick="FinishSeason">Finish Season</button>
+    <MatButton class="btn btn-primary" Raised="true" @onclick="CompleteSeason">Complete Season</MatButton>
 }
 else
 {
     <h1>No season is currently active</h1>
+
+    <a href="addseason">Add a new Season</a>
 }
 
+
+
 @code {
-    private SeasonViewModel season;
+    private SeasonViewModel currentSeason;
 
     protected override async Task OnInitializedAsync()
     {
         await GetCurrentSeason();
     }
 
-    private async Task FinishSeason()
+    private async Task CompleteSeason()
     {
         try
         {
-            await Http.PostAsJsonAsync("/api/FinishCurrentSeason", season.Id);
+            await Http.PostAsJsonAsync("/api/CompleteCurrentSeason", currentSeason.Id);
             await GetCurrentSeason();
         }
         catch (Exception ex)
@@ -41,11 +45,11 @@ else
 
         try
         {
-            season = await Http.GetFromJsonAsync<SeasonViewModel>("/api/CurrentSeason");
+            currentSeason = await Http.GetFromJsonAsync<SeasonViewModel>("/api/GetCurrentSeason");
         }
         catch (Exception ex)
         {
-            season = null;
+            currentSeason = null;
             Console.WriteLine(ex.ToString());
         }
     }

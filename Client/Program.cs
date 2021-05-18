@@ -1,11 +1,9 @@
-using SeasonVoting.Client.Infrastructure;
-using Microsoft.AspNetCore.Components.Authorization;
+using AzureStaticWebApps.Blazor.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using AzureStaticWebApps.Blazor.Authentication;
 
 namespace SeasonVoting.Client
 {
@@ -18,9 +16,6 @@ namespace SeasonVoting.Client
 
             var baseAddress = builder.Configuration["BaseAddress"] ?? builder.HostEnvironment.BaseAddress;
             builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(baseAddress) });
-            //builder.Services.AddOptions();
-            //builder.Services.AddAuthorizationCore();
-            //builder.Services.AddScoped<AuthenticationStateProvider, TestAuthStateProvider>();
             builder.Services.AddStaticWebAppsAuthentication();
 
             await builder.Build().RunAsync();

@@ -28,7 +28,7 @@ else
     {
         try
         {
-            season = await Http.GetFromJsonAsync<SeasonViewModel>("/api/CurrentSeason");
+            season = await Http.GetFromJsonAsync<SeasonViewModel>("/api/GetCurrentSeason");
         }
         catch (Exception ex)
         {
