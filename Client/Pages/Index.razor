@@ -1,17 +1,38 @@
 ﻿@page "/"
+@inject HttpClient Http
 
 <AuthorizeView>
     <Authorized>
-        <h1>Hello, @context.User.Identity.Name!</h1>
-       @foreach(var claim in context.User.Claims)
-                {
-           <p>@claim.Type</p>
-                <p>@claim.Value</p>
-                }
-        <p>@context.User.Identity.AuthenticationType</p>
+        <p>Welcome @context.User.Identity.Name</p>
     </Authorized>
     <NotAuthorized>
-        <h1>Authentication Failure!</h1>
         <p>You're not signed in.</p>
     </NotAuthorized>
 </AuthorizeView>
+
+
+@if (season != null)
+{
+    <h1>Current Season is @season.Name</h1>
+}
+else
+{
+    <h1>No season is currently active</h1>
+}
+
+
+@code {
+    private SeasonViewModel season;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            season = await Http.GetFromJsonAsync<SeasonViewModel>("/api/CurrentSeason");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+    }
+}

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SeasonVoteApp.Shared
+namespace SeasonVoting.Shared
 {
     public class WeatherForecast
     {
