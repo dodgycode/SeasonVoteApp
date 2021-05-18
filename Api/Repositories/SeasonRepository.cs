@@ -23,7 +23,7 @@ namespace SeasonVoting.Api.Repositories
         {
             return _season.Find(c => true).ToList();
         }
-        public async Task<Season> GetByIdAsync(Guid id)
+        public async Task<Season> GetByIdAsync(string id)
         {
             return await _season.Find(c => c.Id == id).FirstOrDefaultAsync();
         }
@@ -32,11 +32,11 @@ namespace SeasonVoting.Api.Repositories
             await _season.InsertOneAsync(customer);
             return customer;
         }
-        public async Task UpdateAsync(Guid id, Season customer)
+        public async Task UpdateAsync(string id, Season customer)
         {
             await _season.ReplaceOneAsync(c => c.Id == id, customer);
         }
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(string id)
         {
             await _season.DeleteOneAsync(c => c.Id == id);
         }

@@ -8,7 +8,7 @@ namespace SeasonVoting.Api.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         [BsonRequired]
         public string Name { get; set; }
