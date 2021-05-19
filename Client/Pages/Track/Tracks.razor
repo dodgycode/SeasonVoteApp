@@ -4,32 +4,39 @@
 
 
 <h2>Tracks</h2>
-
-@if (tracks != null)
-{
-    foreach (var track in tracks)
+@if (hasLoaded)
+{@if (tracks != null)
     {
-        <MatCard>
-            <MatCardContent>
-                <MatBlazor.MatHeadline6>@track.Name</MatBlazor.MatHeadline6>
-                <MatSubtitle1>@track.Availability</MatSubtitle1>
-                <MatSubtitle2>@track.NumberOfVariants layouts</MatSubtitle2>
-            </MatCardContent>
-            <MatCardActions>
-                <MatButton href="@track.Url">View Details</MatButton>
-            </MatCardActions>
-        </MatCard>
+        foreach (var track in tracks)
+        {
+            <MatCard>
+                <MatCardContent>
+                    <MatBlazor.MatHeadline6>@track.Name</MatBlazor.MatHeadline6>
+                    <MatSubtitle1>@track.Availability</MatSubtitle1>
+                    <MatSubtitle2>@track.NumberOfVariants layouts</MatSubtitle2>
+                </MatCardContent>
+                <MatCardActions>
+                    <MatButton href="@track.Url">View Details</MatButton>
+                </MatCardActions>
+            </MatCard>
+        }
+    }
+    else
+    {
+        <h1>No tracks exist</h1>
     }
 }
 else
 {
-    <h1>No tracks exist</h1>
+<MatProgressCircle Indeterminate="true" Size="MatProgressCircleSize.Medium" />
 }
+
 
 
 
 @code {
     private TrackViewModel[] tracks;
+    private bool hasLoaded = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -47,6 +54,10 @@ else
         {
             tracks = null;
             Console.WriteLine(ex.ToString());
+        }
+        finally
+        {
+            hasLoaded = true;
         }
     }
 }

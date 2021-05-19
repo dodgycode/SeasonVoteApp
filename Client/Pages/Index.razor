@@ -1,26 +1,37 @@
 ﻿@page "/"
 @inject HttpClient Http
 
-@if (season != null)
+@if (hasLoaded)
 {
-    <h1>Current Season is @season.Name</h1>
+    @if (season != null)
+    {
+        <h1>Current Season is @season.Name</h1>
+    }
+    else
+    {
+        <h1>No season is currently active</h1>
+    }
 }
 else
 {
-    <h1>No season is currently active</h1>
+    <MatProgressCircle Indeterminate="true" Size="MatProgressCircleSize.Medium" />
 }
+
 
 @code {
     private SeasonViewModel season;
+    private bool hasLoaded = false;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             season = await Http.GetFromJsonAsync<SeasonViewModel>("/api/GetCurrentSeason");
+            hasLoaded = true;
         }
         catch (Exception ex)
         {
+            hasLoaded = true;
             Console.WriteLine(ex.ToString());
         }
     }

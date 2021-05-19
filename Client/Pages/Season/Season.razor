@@ -2,20 +2,28 @@
 @inject HttpClient Http
 
 <h2>Current Season</h2>
-
-@if (currentSeason != null)
+@if (hasLoaded)
 {
-    <p>Current Season is @currentSeason.Name</p>
-    <MatButton Raised="true" @onclick="CompleteSeason">Complete Season</MatButton>
+    @if (currentSeason != null)
+    {
+        <p>Current Season is @currentSeason.Name</p>
+        <MatButton Raised="true" @onclick="CompleteSeason">Complete Season</MatButton>
+    }
+    else
+    {
+        <p>No season is currently active</p>
+        <MatButtonLink href="addseason">Add a new Season</MatButtonLink>
+    }
 }
 else
 {
-    <p>No season is currently active</p>
-    <MatButtonLink href="addseason">Add a new Season</MatButtonLink>
+    <MatProgressCircle Indeterminate="true" Size="MatProgressCircleSize.Medium" />
 }
+
 
 @code {
     private SeasonViewModel currentSeason;
+    private bool hasLoaded = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -46,6 +54,10 @@ else
         {
             currentSeason = null;
             Console.WriteLine(ex.ToString());
+        }
+        finally
+        {
+            hasLoaded = true;
         }
     }
 
