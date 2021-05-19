@@ -35,7 +35,7 @@
 
         try
         {
-            currentSeries = await Http.GetFromJsonAsync<List<SeriesViewModel>>("/api/GetCurrentSeries");
+            currentSeries = await Http.GetFromJsonAsync<List<SeriesViewModel>>("/api/Series/GetCurrent");
         }
         catch (Exception ex)
         {

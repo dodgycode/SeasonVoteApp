@@ -18,7 +18,7 @@ namespace SeasonVoting.Api.Functions
         #region Functions
         [FunctionName("GetCurrentSeries")]
         public static IActionResult GetCurrentSeries(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req, ILogger log)
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "Series/GetCurrent")] HttpRequest req, ILogger log)
         {
             var seasonService = new SeasonRepository();
             var currentSeason = seasonService.GetCurrentSeason();
@@ -36,7 +36,7 @@ namespace SeasonVoting.Api.Functions
         
         [FunctionName("GetSeriesById")]
         public static IActionResult GetSeriesById(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "GetSeriesById/{seriesId}")] HttpRequest req, ILogger log, string seriesId)
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "Series/GetById/{seriesId}")] HttpRequest req, ILogger log, string seriesId)
         {
             var seriesService = new SeriesRepository();
             var series = seriesService.GetById(new ObjectId(seriesId));
@@ -48,7 +48,7 @@ namespace SeasonVoting.Api.Functions
 
         [FunctionName("AddSeries")]
         public static IActionResult AddSeries(
-        [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req, ILogger log)
+        [HttpTrigger(AuthorizationLevel.Function, "post", Route = "Series/Add")] HttpRequest req, ILogger log)
         {
             var content = new StreamReader(req.Body).ReadToEnd();
             var vm = JsonConvert.DeserializeObject<SeriesViewModel>(content);
@@ -61,7 +61,7 @@ namespace SeasonVoting.Api.Functions
 
         [FunctionName("ConstructSeries")]
         public static IActionResult ConstructSeries(
-         [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req, ILogger log)
+         [HttpTrigger(AuthorizationLevel.Function, "get", Route = "Series/Construct")] HttpRequest req, ILogger log)
         {
             var service = new SeasonRepository();
             var season = service.GetCurrentSeason();

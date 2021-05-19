@@ -37,7 +37,7 @@
     {
         try
         {
-            Http.PostAsJsonAsync("/api/AddSeries", series);
+            Http.PostAsJsonAsync("/api/Series/Add", series);
             NavManager.NavigateTo("/currentseries", true);
         }
         catch (Exception ex)
@@ -50,7 +50,7 @@
     {
         try
         {
-            series = await Http.GetFromJsonAsync<SeriesViewModel>("/api/ConstructSeries");
+            series = await Http.GetFromJsonAsync<SeriesViewModel>("/api/Series/Construct");
         }
         catch (Exception ex)
         {

@@ -15,6 +15,6 @@ namespace SeasonVoting.Api.Models
 
         public int NumberToBeSelectedFromTier { get; set; }
 
-        public List<Track> Tracks { get; set; }
+        public List<Track> Tracks { get; set; } = new List<Track>();
     }
 }

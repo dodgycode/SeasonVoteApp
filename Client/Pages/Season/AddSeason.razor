@@ -44,7 +44,7 @@
     {
         try
         {
-            Http.PostAsJsonAsync("/api/AddSeason", season);
+            Http.PostAsJsonAsync("/api/Season/Add", season);
             NavManager.NavigateTo("/season",true);
         }
         catch (Exception ex)
@@ -57,7 +57,7 @@
     {
         try
         {
-            season = await Http.GetFromJsonAsync<SeasonViewModel>("/api/GetDefaultNextSeason");
+            season = await Http.GetFromJsonAsync<SeasonViewModel>("/api/Season/ConstructNew");
         }
         catch (Exception ex)
         {

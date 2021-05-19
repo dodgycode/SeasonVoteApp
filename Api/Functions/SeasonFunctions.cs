@@ -19,7 +19,7 @@ namespace SeasonVoting.Api.Functions
         #region Functions
         [FunctionName("GetCurrentSeason")]
         public static IActionResult GetCurrentSeason(
-           [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req, ILogger log)
+           [HttpTrigger(AuthorizationLevel.Function, "get", Route = "Season/GetCurrent")] HttpRequest req, ILogger log)
         {
             var service = new SeasonRepository();
             var currentSeason = service.GetCurrentSeason();
@@ -34,7 +34,7 @@ namespace SeasonVoting.Api.Functions
 
         [FunctionName("GetDefaultNextSeason")]
         public static IActionResult GetDefaultNextSeason(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req, ILogger log)
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "Season/ConstructNew")] HttpRequest req, ILogger log)
         {
             var service = new SeasonRepository();
             var seasons = service.GetAll();
@@ -52,7 +52,7 @@ namespace SeasonVoting.Api.Functions
 
         [FunctionName("CompleteCurrentSeason")]
         public static IActionResult CompleteCurrentSeason(
-        [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req, ILogger log)
+        [HttpTrigger(AuthorizationLevel.Function, "post", Route = "Season/Complete")] HttpRequest req, ILogger log)
         {
             var content = new StreamReader(req.Body).ReadToEnd();
             var obj = JsonConvert.DeserializeObject<string>(content);
@@ -67,7 +67,7 @@ namespace SeasonVoting.Api.Functions
 
         [FunctionName("AddSeason")]
         public static IActionResult AddSeason(
-        [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req, ILogger log)
+        [HttpTrigger(AuthorizationLevel.Function, "post", Route = "Season/Add")] HttpRequest req, ILogger log)
         {
             var content = new StreamReader(req.Body).ReadToEnd();
             var vm = JsonConvert.DeserializeObject<SeasonViewModel>(content);

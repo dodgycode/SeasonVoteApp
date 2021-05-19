@@ -13,6 +13,24 @@
             <MatBody1>@currentSeries.Description</MatBody1>
         </MatCardContent>
     </MatCard>
+
+    @foreach (var tier in currentSeries.Tiers)
+    {
+        <MatCard>
+            <MatCardContent>
+                <MatBlazor.MatHeadline6>@tier.Name</MatBlazor.MatHeadline6>
+                <MatSubtitle1>@tier.NumberToBeSelectedFromTier Tracks to be picked from a pool of @tier.Tracks.Count</MatSubtitle1>
+                <MatBody1>
+                    <ul>
+                        @foreach (var track in tier.Tracks)
+                        {
+                            <li>@track.Name</li>
+                        }
+                    </ul>
+                </MatBody1>
+            </MatCardContent>
+        </MatCard>
+    }
 }
 <MatButtonLink href="addtier">Add a new Tier</MatButtonLink>
 
@@ -30,7 +48,7 @@
     {
         try
         {
-            currentSeries = await Http.GetFromJsonAsync<SeriesViewModel>($"/api/GetSeriesById/{SeriesId}");
+            currentSeries = await Http.GetFromJsonAsync<SeriesViewModel>($"/api/Series/GetById/{SeriesId}");
         }
         catch (Exception ex)
         {

@@ -16,7 +16,7 @@ namespace SeasonVoting.Api.Functions
         #region Functions
         [FunctionName("GetAllTracks")]
         public static IActionResult GetAllTracks(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req, ILogger log)
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "Tracks/GetAll")] HttpRequest req, ILogger log)
         {
             var service = new TrackRepository();
             var tracks = service.GetAll();

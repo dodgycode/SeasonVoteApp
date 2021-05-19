@@ -34,7 +34,7 @@ else
     {
         try
         {
-            await Http.PostAsJsonAsync("/api/CompleteCurrentSeason", currentSeason.Id);
+            await Http.PostAsJsonAsync("/api/Season/Complete", currentSeason.Id);
             await GetCurrentSeason();
         }
         catch (Exception ex)
@@ -48,7 +48,7 @@ else
 
         try
         {
-            currentSeason = await Http.GetFromJsonAsync<SeasonViewModel>("/api/GetCurrentSeason");
+            currentSeason = await Http.GetFromJsonAsync<SeasonViewModel>("/api/Season/GetCurrent");
         }
         catch (Exception ex)
         {
