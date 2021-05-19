@@ -3,27 +3,31 @@
 @inject NavigationManager NavManager;
 
 <h2>Current Series</h2>
-
-@if (currentSeries != null)
+@if (hasLoaded)
 {
-    foreach (var series in currentSeries)
+    @if (currentSeries != null)
     {
-        <MatCard>
-            <MatCardContent>
-                <MatBlazor.MatHeadline6>@series.Name</MatBlazor.MatHeadline6>
-                <MatSubtitle2>@series.Tiers.Count Tiers</MatSubtitle2>
-                <MatBody1>@series.Description</MatBody1>
-            </MatCardContent>
-            <MatCardActions>
-                <MatButton @onclick="() => EditSeries(series)">View</MatButton>
-            </MatCardActions>
-        </MatCard>
-    }
+        foreach (var series in currentSeries)
+        {
+            <MatCard>
+                <MatCardContent @onclick="() => EditSeries(series)">
+                    <MatBlazor.MatHeadline6>@series.Name</MatBlazor.MatHeadline6>
+                    <MatSubtitle2>@series.Tiers.Count Tiers</MatSubtitle2>
+                    <MatBody1>@series.Description</MatBody1>
+                </MatCardContent>
+            </MatCard>
+        }
+    } }
+else
+{
+    <MatProgressCircle Indeterminate="true" Size="MatProgressCircleSize.Medium" />
 }
+
 <MatButtonLink href="addseries">Add a new Series</MatButtonLink>
 
 @code {
     private List<SeriesViewModel> currentSeries;
+    private bool hasLoaded = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -41,6 +45,10 @@
         {
             currentSeries = null;
             Console.WriteLine(ex.ToString());
+        }
+        finally
+        {
+            hasLoaded = true;
         }
     }
 

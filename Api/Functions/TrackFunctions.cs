@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
-using SeasonVoting.Api.Enums;
 using SeasonVoting.Api.Models;
 using SeasonVoting.Api.Repositories;
 using SeasonVoting.Shared;
@@ -23,7 +22,7 @@ namespace SeasonVoting.Api.Functions
             var vms = new List<TrackViewModel>();
             foreach (var track in tracks)
             {
-                vms.Add(ToViewModel(track));
+                vms.Add(Track.ToViewModel(track));
             }
 
             return new OkObjectResult(vms.ToArray());
@@ -31,37 +30,5 @@ namespace SeasonVoting.Api.Functions
 
         #endregion
 
-        #region Private Methods
-
-        private static TrackViewModel ToViewModel(Track track)
-        {
-            string availability;
-
-            switch (track.TrackAvailability)
-            {
-                case TrackAvailability.Free:
-                    availability = "Free";
-                    break;
-                case TrackAvailability.Legacy:
-                    availability = "Legacy";
-                    break;
-                case TrackAvailability.Paid:
-                    availability = "Paid";
-                    break;
-                default:
-                    availability = "";
-                    break;
-            }
-
-            return new TrackViewModel
-            {
-                Name = track.Name,
-                Availability = availability,
-                NumberOfVariants = track.Variants.Count,
-                Url = track.Url
-            };
-        }
-
-        #endregion
     }
 }

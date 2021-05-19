@@ -25,7 +25,7 @@ namespace SeasonVoting.Api.Functions
             var currentSeason = service.GetCurrentSeason();
             if (currentSeason != null)
             {
-                var vm = ToViewModel(currentSeason);
+                var vm = Season.ToViewModel(currentSeason);
                 return new OkObjectResult(vm);
             }
 
@@ -71,7 +71,7 @@ namespace SeasonVoting.Api.Functions
         {
             var content = new StreamReader(req.Body).ReadToEnd();
             var vm = JsonConvert.DeserializeObject<SeasonViewModel>(content);
-            var season = ToEntity(vm);
+            var season = Season.FromViewModel(vm);
 
             var service = new SeasonRepository();
             service.Create(season);
@@ -80,31 +80,5 @@ namespace SeasonVoting.Api.Functions
 
         #endregion
 
-        #region Private Methods
-
-        private static SeasonViewModel ToViewModel(Season season)
-        {
-            return new SeasonViewModel
-            {
-                Id = season.Id.ToString(),
-                Name = season.Name,
-                StartDate = season.StartDate,
-                EndDate = season.EndDate,
-                IsComplete = season.IsComplete
-            };
-        }
-
-        private static Season ToEntity(SeasonViewModel vm)
-        {
-            return new Season
-            {
-                Name = vm.Name,
-                StartDate = vm.StartDate,
-                EndDate = vm.EndDate,
-                IsComplete = vm.IsComplete
-            };
-        }
-
-        #endregion
     }
 }

@@ -7,7 +7,23 @@
     @if (currentSeason != null)
     {
         <p>Current Season is @currentSeason.Name</p>
-        <MatButton Raised="true" @onclick="CompleteSeason">Complete Season</MatButton>
+        <MatButton Raised="true" OnClick="(e => { dialogIsOpen = true; })">Complete Season</MatButton>
+
+        <MatDialog @bind-IsOpen="@dialogIsOpen">
+            <MatDialogTitle>Complete @currentSeason.Name?</MatDialogTitle>
+            <MatDialogContent>
+                <p>
+                    Are you sure you want to complete @currentSeason.Name?
+                    Doing so will mean you can no longer configure series associated with the season.
+                    It also means you can no longer accept track voting for this season.
+                </p>
+                <p>Please continue only if you are finished with this season and ready to start planning for the next season.</p>
+            </MatDialogContent>
+            <MatDialogActions>
+                <MatButton OnClick="@(e => { dialogIsOpen = false; })">Cancel</MatButton>
+                <MatButton OnClick="@CompleteSeason">OK</MatButton>
+            </MatDialogActions>
+        </MatDialog>
     }
     else
     {
@@ -24,6 +40,7 @@ else
 @code {
     private SeasonViewModel currentSeason;
     private bool hasLoaded = false;
+    private bool dialogIsOpen = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -40,6 +57,10 @@ else
         catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
+        }
+        finally
+        {
+            dialogIsOpen = false;
         }
     }
 

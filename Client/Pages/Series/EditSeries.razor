@@ -31,8 +31,8 @@
             </MatCardContent>
         </MatCard>
     }
+    <MatButton @onclick="AddTier">Add a new Tier</MatButton>
 }
-<MatButtonLink href="addtier">Add a new Tier</MatButtonLink>
 
 @code {
     [Parameter]
@@ -55,5 +55,24 @@
             currentSeries = null;
             Console.WriteLine(ex.ToString());
         }
+    }
+
+    private void AddTier()
+    {
+        currentSeries.Tiers.Add(new TierViewModel
+        {
+            Name = $"Tier {currentSeries.Tiers.Count + 1}",
+            NumberToBeSelectedFromTier = 3,
+            Tracks = new List<TrackViewModel>()
+        });
+
+            try
+            {
+                Http.PostAsJsonAsync("/api/Series/Update", currentSeries);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
     }
 }
