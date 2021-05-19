@@ -1,0 +1,41 @@
+﻿@page "/EditSeries/{seriesId}"
+@inject HttpClient Http
+@inject NavigationManager NavManager
+
+<h2>Edit Series</h2>
+
+@if (currentSeries != null)
+{
+    <MatCard>
+        <MatCardContent>
+            <MatBlazor.MatHeadline6>@currentSeries.Name</MatBlazor.MatHeadline6>
+            <MatSubtitle2>@currentSeries.Tiers.Count Tiers</MatSubtitle2>
+            <MatBody1>@currentSeries.Description</MatBody1>
+        </MatCardContent>
+    </MatCard>
+}
+<MatButtonLink href="addtier">Add a new Tier</MatButtonLink>
+
+@code {
+    [Parameter]
+    public string SeriesId { get; set; }
+    private SeriesViewModel currentSeries;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetCurrentSeries();
+    }
+
+    private async Task GetCurrentSeries()
+    {
+        try
+        {
+            currentSeries = await Http.GetFromJsonAsync<SeriesViewModel>($"/api/GetSeriesById/{SeriesId}");
+        }
+        catch (Exception ex)
+        {
+            currentSeries = null;
+            Console.WriteLine(ex.ToString());
+        }
+    }
+}

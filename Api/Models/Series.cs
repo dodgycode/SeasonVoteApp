@@ -18,7 +18,7 @@ namespace SeasonVoting.Api.Models
         [BsonRequired]
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId SeasonId { get; set; }
-
-        public List<TrackTier> TrackTiers { get; set; }
+        
+        public List<TrackTier> TrackTiers { get; set; } = new List<TrackTier>();
     }
 }

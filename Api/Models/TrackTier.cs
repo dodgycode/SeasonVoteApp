@@ -15,10 +15,6 @@ namespace SeasonVoting.Api.Models
 
         public int NumberToBeSelectedFromTier { get; set; }
 
-        [BsonRequired]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId SeriesId { get; set; }
-
         public List<Track> Tracks { get; set; }
     }
 }

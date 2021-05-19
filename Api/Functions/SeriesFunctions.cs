@@ -33,6 +33,18 @@ namespace SeasonVoting.Api.Functions
 
             return new OkObjectResult(vms.ToArray());
         }
+        
+        [FunctionName("GetSeriesById")]
+        public static IActionResult GetSeriesById(
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "GetSeriesById/{seriesId}")] HttpRequest req, ILogger log, string seriesId)
+        {
+            var seriesService = new SeriesRepository();
+            var series = seriesService.GetById(new ObjectId(seriesId));
+
+            var vm = ToViewModel(series);
+           
+            return new OkObjectResult(vm);
+        }
 
         [FunctionName("AddSeries")]
         public static IActionResult AddSeries(
@@ -63,24 +75,46 @@ namespace SeasonVoting.Api.Functions
 
         private static SeriesViewModel ToViewModel(Series series)
         {
-            return new SeriesViewModel
+            var vm = new SeriesViewModel
             {
                 Id = series.Id.ToString(),
                 Name = series.Name,
                 Description = series.Description,
                 SeasonId = series.SeasonId.ToString()
             };
+
+            if (series.TrackTiers == null) { series.TrackTiers = new List<TrackTier>(); }
+            foreach(var tier in series.TrackTiers)
+            {
+                vm.Tiers.Add(new TierViewModel
+                {
+                    Id = tier.Id.ToString(),
+                    Name = tier.Name,
+                    NumberToBeSelectedFromTier = tier.NumberToBeSelectedFromTier
+                });
+            }
+            return vm;
         }
         
         private static Series ToEntity(SeriesViewModel vm)
         {
-            return new Series
+            var series = new Series
             {
                 Id = new ObjectId(vm.Id),
                 Name = vm.Name,
                 Description = vm.Description,
                 SeasonId = new ObjectId(vm.SeasonId)
             };
+            foreach(var tier in vm.Tiers)
+            {
+                series.TrackTiers.Add(new TrackTier
+                {
+                    Id = new ObjectId(tier.Id),
+                    Name = tier.Name,
+                    NumberToBeSelectedFromTier = tier.NumberToBeSelectedFromTier
+                });
+            }
+            return series;
         }
 
         #endregion
