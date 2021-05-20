@@ -1,9 +1,8 @@
-﻿using SeasonVoting.Api.Enums;
-
-namespace SeasonVoting.Api.StaticClasses
+﻿namespace SeasonVoting.Api.Enums
 {
     public static class EnumTools
     {
+        #region ToViewModel
         public static string ToViewModel(TrackAvailability availability)
         {
             string vm;
@@ -25,6 +24,7 @@ namespace SeasonVoting.Api.StaticClasses
             }
 
             return vm;
-        }
+        } 
+        #endregion
     }
 }

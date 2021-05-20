@@ -17,7 +17,7 @@
     @foreach (var tier in currentSeries.Tiers)
     {
         <MatCard>
-            <MatCardContent>
+            <MatCardContent @onclick="()=> EditTier(tier)">
                 <MatBlazor.MatHeadline6>@tier.Name</MatBlazor.MatHeadline6>
                 <MatSubtitle1>@tier.NumberToBeSelectedFromTier Tracks to be picked from a pool of @tier.Tracks.Count</MatSubtitle1>
                 <MatBody1>
@@ -66,13 +66,18 @@
             Tracks = new List<TrackViewModel>()
         });
 
-            try
-            {
-                Http.PostAsJsonAsync("/api/Series/Update", currentSeries);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
+        try
+        {
+            Http.PostAsJsonAsync("/api/Series/Update", currentSeries);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+    }
+
+    private void EditTier(TierViewModel tier)
+    {
+        NavManager.NavigateTo($"/EditTier/{tier.Id}");
     }
 }

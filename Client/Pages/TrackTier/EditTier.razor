@@ -1,0 +1,68 @@
+﻿@page "/EditTier/{tierId}"
+@inject HttpClient Http
+@inject NavigationManager NavManager
+
+<h2>Edit Tier</h2>
+
+@if (currentTier != null)
+{
+    <EditForm Model="@currentTier">
+        <p>
+            <label>
+                Name:
+                <MatTextField @bind-Value="currentTier.Name" />
+            </label>
+        </p>
+        <p>
+            <label>
+                Number of tracks to be selected from this tier:
+                <MatNumericUpDownField @bind-Value="currentTier.NumberToBeSelectedFromTier" />
+            </label>
+        </p>
+    </EditForm>
+
+    @foreach (var track in currentTier.Tracks)
+    {
+        <MatCard>
+            <MatCardContent>
+                <MatBlazor.MatHeadline6>@track.Name</MatBlazor.MatHeadline6>
+                <MatSubtitle1>@track.Availability</MatSubtitle1>
+                <MatSubtitle2>@track.NumberOfVariants layouts</MatSubtitle2>
+            </MatCardContent>
+        </MatCard>
+    }
+
+    <MatButton @onclick="AddTrack">Add Track</MatButton>
+}
+
+@code {
+    [Parameter]
+    public string TierId { get; set; }
+    private TierViewModel currentTier;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetTier();
+    }
+
+    private async Task GetTier()
+    {
+        try
+        {
+            currentTier = await Http.GetFromJsonAsync<TierViewModel>($"/api/Tier/GetById/{TierId}");
+        }
+        catch (Exception ex)
+        {
+            currentTier = null;
+            Console.WriteLine(ex.ToString());
+        }
+    }
+
+    private void AddTrack()
+    {
+        currentTier.Tracks.Add(new TrackViewModel
+        {
+            
+        });
+    }
+}

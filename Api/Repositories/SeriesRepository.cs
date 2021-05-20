@@ -27,6 +27,7 @@ namespace SeasonVoting.Api.Repositories
         {
             return  _series.Find(c => c.SeasonId == seasonId).ToList();
         }
+
         public Series Create(Series series)
         {
             _series.InsertOne(series);
