@@ -2,24 +2,22 @@
 @inject HttpClient Http
 @inject NavigationManager NavManager
 
-<h2>Edit Series</h2>
-
 @if (currentSeries != null)
 {
-    <MatCard>
-        <MatCardContent>
-            <MatBlazor.MatHeadline6>@currentSeries.Name</MatBlazor.MatHeadline6>
-            <MatSubtitle2>@currentSeries.Tiers.Count Tiers</MatSubtitle2>
-            <MatBody1>@currentSeries.Description</MatBody1>
-        </MatCardContent>
-    </MatCard>
+    <h2>@currentSeries.Name</h2>
+    <h4>@currentSeries.Tiers.Count Tiers</h4>
+    <p>@currentSeries.Description</p>
+
+    <MatDivider></MatDivider>
+
+    <br />
 
     @foreach (var tier in currentSeries.Tiers)
     {
         <MatCard>
             <MatCardContent @onclick="()=> EditTier(tier)">
                 <MatBlazor.MatHeadline6>@tier.Name</MatBlazor.MatHeadline6>
-                <MatSubtitle1>@tier.NumberToBeSelectedFromTier Tracks to be picked from a pool of @tier.Tracks.Count</MatSubtitle1>
+                <MatSubtitle1>@tier.NumberToBeSelectedFromTier tracks to be picked from a pool of @tier.Tracks.Count</MatSubtitle1>
                 <MatBody1>
                     <ul>
                         @foreach (var track in tier.Tracks)

@@ -7,20 +7,12 @@
 @if (currentTier != null)
 {
     <EditForm Model="@currentTier">
-        <p>
-            <label>
-                Name:
-                <MatTextField @bind-Value="currentTier.Name" />
-            </label>
-        </p>
-        <p>
-            <label>
-                Number of tracks to be selected from this tier:
-                <MatNumericUpDownField @bind-Value="currentTier.NumberToBeSelectedFromTier" />
-            </label>
-        </p>
-    </EditForm>
 
+        <MatTextField Label="Tier Name" @bind-Value="currentTier.Name" />
+        <MatNumericUpDownField Label="Number of tracks to be selected" @bind-Value="currentTier.NumberToBeSelectedFromTier" />
+
+    </EditForm>
+    <MatDivider></MatDivider>
     @foreach (var track in currentTier.Tracks)
     {
         <MatCard>
@@ -30,19 +22,36 @@
                 <MatSubtitle2>@track.NumberOfVariants layouts</MatSubtitle2>
             </MatCardContent>
         </MatCard>
+        <br />
     }
 
-    <MatButton @onclick="AddTrack">Add Track</MatButton>
+    @if (trackList != null)
+    {
+        @if (dialogIsOpen)
+        {
+            <MatAutocompleteList Items="@trackList" @bind-Value="newTrackName" TItem="string" Label="Select a track"></MatAutocompleteList>
+            <MatButton @onclick="() => dialogIsOpen = false">Cancel</MatButton>
+            <MatButton Raised="true" OnClick="@AddTrack">Add</MatButton>
+        }
+        else
+        {
+            <MatButton @onclick="() => dialogIsOpen = true">Add Track</MatButton>
+        }
+    }
 }
 
 @code {
     [Parameter]
     public string TierId { get; set; }
     private TierViewModel currentTier;
+    private List<string> trackList;
+    private bool dialogIsOpen = false;
+    string newTrackName;
 
     protected override async Task OnInitializedAsync()
     {
         await GetTier();
+        await GetTrackList();
     }
 
     private async Task GetTier()
@@ -58,11 +67,35 @@
         }
     }
 
-    private void AddTrack()
+    private async Task GetTrackList()
     {
-        currentTier.Tracks.Add(new TrackViewModel
+        try
         {
-            
-        });
+            var tracks = await Http.GetFromJsonAsync<List<TrackViewModel>>("/api/Track/GetAll");
+            trackList = tracks.Select(t => t.Name).ToList();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+    }
+
+    private async Task AddTrack()
+    {
+        try
+        {
+            var newTrack = await Http.GetFromJsonAsync<TrackViewModel>($"/api/Track/GetByName/{newTrackName}");
+            currentTier.Tracks.Add(newTrack);
+            trackList.Remove(newTrackName);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+        finally
+        {
+            dialogIsOpen = false;
+            newTrackName = null;
+        }
     }
 }

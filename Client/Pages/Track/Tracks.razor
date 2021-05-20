@@ -45,7 +45,7 @@ else
 
         try
         {
-            tracks = await Http.GetFromJsonAsync<TrackViewModel[]>("/api/Tracks/GetAll");
+            tracks = await Http.GetFromJsonAsync<TrackViewModel[]>("/api/Track/GetAll");
         }
         catch (Exception ex)
         {

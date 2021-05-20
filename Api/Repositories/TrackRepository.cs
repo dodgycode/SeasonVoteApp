@@ -2,17 +2,12 @@
 using MongoDB.Driver;
 using SeasonVoting.Api.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SeasonVoting.Api.Repositories
 {
     public class TrackRepository : RepositoryBase
     {
-        private readonly IMongoCollection<Track> _track;
-        public TrackRepository()
-        {
-           // _track = Database.GetCollection<Track>(CollectionNames.Track);
-        }
-
         public List<Track> GetAll()
         {
             //  return _track.Find(c => true).ToList();
@@ -21,20 +16,12 @@ namespace SeasonVoting.Api.Repositories
 
         public Track GetById(ObjectId id)
         {
-            return  _track.Find(c => c.Id == id).FirstOrDefault();
+            return  StaticClasses.Tracks.AllTracks.FirstOrDefault(t=>t.Id == id);
         }
-        public Track Create(Track track)
+        public Track GetByName(string name)
         {
-            _track.InsertOne(track);
-            return track;
+            return  StaticClasses.Tracks.AllTracks.FirstOrDefault(t=>t.Name == name);
         }
-        public void Update(ObjectId id, Track track)
-        {
-            _track.ReplaceOne(c => c.Id == id, track);
-        }
-        public void Delete(ObjectId id)
-        {
-            _track.DeleteOne(c => c.Id == id);
-        }
+        
     }
 }

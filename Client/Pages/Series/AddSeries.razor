@@ -8,19 +8,14 @@
     <ValidationSummary />
 
     <p>
-        <label>
-            Name:
-            <InputText @bind-Value="series.Name" />
-        </label>
+        <MatTextField Label="Name" @bind-Value="series.Name" />
     </p>
     <p>
-        <label>
-            Description:
-            <MatInputTextComponent @bind-Value="series.Description" />
-        </label>
+        <MatInputTextComponent Label="Description" @bind-Value="series.Description" />
     </p>
 
-    <MatButton Raised="true" class="btn btn-primary" @onclick="AddNewSeries">Add</MatButton>
+    <MatButton @onclick="Cancel">Cancel</MatButton>
+    <MatButton Raised="true" @onclick="AddNewSeries">Add</MatButton>
 
 </EditForm>
 
@@ -59,5 +54,8 @@
         }
     }
 
-
+    private void Cancel()
+    {
+        NavManager.NavigateTo("/currentseries");
+    }
 }
