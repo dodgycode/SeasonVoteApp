@@ -1,10 +1,10 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using SeasonVoting.Api.StaticClasses;
-using SeasonVoting.Shared;
+using SeasonVoting.Shared.Preparation;
 using System.Collections.Generic;
 
-namespace SeasonVoting.Api.Models
+namespace SeasonVoting.Api.Models.Preparation
 {
     public class Series
     {
@@ -37,7 +37,7 @@ namespace SeasonVoting.Api.Models
             if (series.TrackTiers == null) { series.TrackTiers = new List<TrackTier>(); }
             foreach (var tier in series.TrackTiers)
             {
-                vm.Tiers.Add(TrackTier.ToViewModel(tier));                
+                vm.Tiers.Add(TrackTier.ToViewModel(tier));
             }
             return vm;
         }

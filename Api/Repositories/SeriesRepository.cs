@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
-using SeasonVoting.Api.Models;
+using SeasonVoting.Api.Models.Preparation;
 using System.Collections.Generic;
 
 namespace SeasonVoting.Api.Repositories

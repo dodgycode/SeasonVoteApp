@@ -1,4 +1,6 @@
-﻿namespace SeasonVoting.Shared
+﻿using System.Collections.Generic;
+
+namespace SeasonVoting.Shared.Config
 {
     public class TrackViewModel
     {
@@ -7,6 +9,7 @@
         public string Availability { get; set; }
         public string Url { get; set; }
         public int NumberOfVariants { get; set; }
-    }    
-    
+        public List<TrackVariantViewModel> Variants { get; set; } = new List<TrackVariantViewModel>();
+    }
+
 }

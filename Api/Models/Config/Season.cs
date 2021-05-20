@@ -1,10 +1,10 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using SeasonVoting.Api.StaticClasses;
-using SeasonVoting.Shared;
+using SeasonVoting.Shared.Config;
 using System;
 
-namespace SeasonVoting.Api.Models
+namespace SeasonVoting.Api.Models.Config
 {
     public class Season
     {

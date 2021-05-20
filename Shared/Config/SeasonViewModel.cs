@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SeasonVoting.Shared
+namespace SeasonVoting.Shared.Config
 {
     public class SeasonViewModel
     {
@@ -10,5 +10,5 @@ namespace SeasonVoting.Shared
         public DateTime EndDate { get; set; }
         public bool IsComplete { get; set; }
     }
-    
+
 }

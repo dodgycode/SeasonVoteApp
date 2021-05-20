@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 using SeasonVoting.Api.Enums;
-using SeasonVoting.Api.Models;
+using SeasonVoting.Api.Models.Config;
 using System.Collections.Generic;
 
 namespace SeasonVoting.Api.StaticClasses
@@ -21,7 +21,8 @@ namespace SeasonVoting.Api.StaticClasses
             RoadAmerica,
             IrwindaleSpeedway,
             HomesteadMiamiSpeedway,
-            DaytonaInternationalSpeedway_2008Legacy
+            DaytonaInternationalSpeedway_2008Legacy,
+            RichmondRaceway
         };
 
         public static Track LimeRockPark_2008Legacy => new Track
@@ -287,7 +288,7 @@ namespace SeasonVoting.Api.StaticClasses
         public static Track HomesteadMiamiSpeedway => new Track
         {
             Id = new ObjectId("60a65bf46170deeb06b8bb1a"),
-            Name = "Irwindale Speedway",
+            Name = "Homestead Miami Speedway",
             TrackAvailability = TrackAvailability.Paid,
             Url = "https://members.iracing.com/membersite/member/TrackDetail.do?trkid=20",
             Variants = new List<TrackVariant>
@@ -351,6 +352,21 @@ namespace SeasonVoting.Api.StaticClasses
                 {
                     Name = "Rallycross Long",
                     TrackType = TrackType.DirtRoad
+                },
+            }
+        };
+        public static Track RichmondRaceway => new Track
+        {
+            Id = new ObjectId("60a6610d6869228f49c0a041"),
+            Name = "Richmond Raceway",
+            TrackAvailability = TrackAvailability.Paid,
+            Url = "https://members.iracing.com/membersite/member/TrackDetail.do?trkid=31",
+            Variants = new List<TrackVariant>
+            {
+                new TrackVariant
+                {
+                    Name = "",
+                    TrackType = TrackType.Oval
                 },
             }
         };

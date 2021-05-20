@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
-using SeasonVoting.Api.Models;
+using SeasonVoting.Api.Models.Config;
 using System.Collections.Generic;
 using System.Linq;
 

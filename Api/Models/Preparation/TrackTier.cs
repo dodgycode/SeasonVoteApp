@@ -1,10 +1,11 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using SeasonVoting.Api.StaticClasses;
-using SeasonVoting.Shared;
+using SeasonVoting.Shared.Preparation;
+using System;
 using System.Collections.Generic;
 
-namespace SeasonVoting.Api.Models
+namespace SeasonVoting.Api.Models.Preparation
 {
     public class TrackTier
     {
@@ -17,7 +18,7 @@ namespace SeasonVoting.Api.Models
 
         public int NumberToBeSelectedFromTier { get; set; }
 
-        public List<Track> Tracks { get; set; } = new List<Track>();
+        public List<ScheduleTrack> Tracks { get; set; } = new List<ScheduleTrack>();
 
         #region Public Methods
         public static TierViewModel ToViewModel(TrackTier tier)
@@ -28,14 +29,25 @@ namespace SeasonVoting.Api.Models
                 Name = tier.Name,
                 NumberToBeSelectedFromTier = tier.NumberToBeSelectedFromTier,
             };
-            if (tier.Tracks == null) { tier.Tracks = new List<Track>(); }
+            if (tier.Tracks == null) { tier.Tracks = new List<ScheduleTrack>(); }
             foreach (var track in tier.Tracks)
             {
-                tierVm.Tracks.Add(Track.ToViewModel(track));
+                tierVm.Tracks.Add(ScheduleTrack.ToViewModel(track));
             }
 
             return tierVm;
-        } 
+        }
+
+        internal static TrackTier FromViewModel(TierViewModel vm)
+        {
+            return new TrackTier
+            {
+                Id = BsonTools.ResolveObjectId(vm.Id),
+                Name = vm.Name,
+                NumberToBeSelectedFromTier = vm.NumberToBeSelectedFromTier,
+                Tracks = ScheduleTrack.FromViewModel(vm.Tracks)
+            };
+        }
         #endregion
     }
 }

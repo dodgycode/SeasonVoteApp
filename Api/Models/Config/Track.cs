@@ -2,11 +2,10 @@
 using MongoDB.Bson.Serialization.Attributes;
 using SeasonVoting.Api.Enums;
 using SeasonVoting.Api.StaticClasses;
-using SeasonVoting.Shared;
-using System;
+using SeasonVoting.Shared.Config;
 using System.Collections.Generic;
 
-namespace SeasonVoting.Api.Models
+namespace SeasonVoting.Api.Models.Config
 {
     public class Track
     {
@@ -24,11 +23,12 @@ namespace SeasonVoting.Api.Models
         [BsonRepresentation(BsonType.Int32)]
         public TrackAvailability TrackAvailability { get; set; }
 
-        public List<TrackVariant> Variants { get; set; }
+        public List<TrackVariant> Variants { get; set; } = new List<TrackVariant>();
 
+        #region Public Methods
         public static TrackViewModel ToViewModel(Track track)
         {
-            return new TrackViewModel
+            var vm = new TrackViewModel
             {
                 Id = BsonTools.ResolveObjectId(track.Id).ToString(),
                 Name = track.Name,
@@ -36,6 +36,13 @@ namespace SeasonVoting.Api.Models
                 Url = track.Url,
                 Availability = EnumTools.ToViewModel(track.TrackAvailability)
             };
+            foreach (var variant in track.Variants)
+            {
+                vm.Variants.Add(TrackVariant.ToViewModel(variant));
+            }
+
+            return vm;
         }
+        #endregion
     }
 }

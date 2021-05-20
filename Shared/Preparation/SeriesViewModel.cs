@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SeasonVoting.Shared
+namespace SeasonVoting.Shared.Preparation
 {
     public class SeriesViewModel
     {

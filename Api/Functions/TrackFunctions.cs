@@ -4,9 +4,9 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
-using SeasonVoting.Api.Models;
+using SeasonVoting.Api.Models.Config;
 using SeasonVoting.Api.Repositories;
-using SeasonVoting.Shared;
+using SeasonVoting.Shared.Config;
 using System.Collections.Generic;
 
 namespace SeasonVoting.Api.Functions
@@ -40,9 +40,9 @@ namespace SeasonVoting.Api.Functions
             return new OkObjectResult(vm);
         }
 
-        [FunctionName("GetTrackByName")]
-        public static IActionResult GetSeriesByName(
-    [HttpTrigger(AuthorizationLevel.Function, "get", Route = "Track/GetByName/{name}")] HttpRequest req, ILogger log, string name)
+        [FunctionName("GetSchduleTrackByName")]
+        public static IActionResult GetSchduleTrackByName(
+    [HttpTrigger(AuthorizationLevel.Function, "get", Route = "Track/GetScheduleTrackByName/{name}")] HttpRequest req, ILogger log, string name)
         {
             var service = new TrackRepository();
             var track = service.GetByName(name);

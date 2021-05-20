@@ -17,20 +17,31 @@
     {
         <MatCard>
             <MatCardContent>
-                <MatBlazor.MatHeadline6>@track.Name</MatBlazor.MatHeadline6>
+                <MatBlazor.MatHeadline6>@track.Name - @track.VariantName</MatBlazor.MatHeadline6>
                 <MatSubtitle1>@track.Availability</MatSubtitle1>
-                <MatSubtitle2>@track.NumberOfVariants layouts</MatSubtitle2>
+                <MatSubtitle2>@track.TrackType</MatSubtitle2>
             </MatCardContent>
         </MatCard>
         <br />
     }
 
-    @if (trackList != null)
+    @if (trackNames != null)
     {
         @if (dialogIsOpen)
         {
-            <MatAutocompleteList Items="@trackList" @bind-Value="newTrackName" TItem="string" Label="Select a track"></MatAutocompleteList>
-            <MatButton @onclick="() => dialogIsOpen = false">Cancel</MatButton>
+            <MatAutocompleteList Items="@trackNames" @bind-Value="newTrackName" TItem="string" Label="Select a track" @onblur="LoadVariants" FullWidth="true"></MatAutocompleteList>
+            <br />
+            @if (variants != null)
+            {
+                <MatSelect @bind-Value="newVariantName" FullWidth="true" Label="Select a layout">
+                    @foreach (var variant in variants)
+                                    {
+                        <MatOptionString Value="@variant.Name">@variant.Name</MatOptionString>
+                                    }
+                </MatSelect>
+            }
+            <br />
+            <MatButton @onclick="Cancel">Cancel</MatButton>
             <MatButton Raised="true" OnClick="@AddTrack">Add</MatButton>
         }
         else
@@ -44,9 +55,12 @@
     [Parameter]
     public string TierId { get; set; }
     private TierViewModel currentTier;
-    private List<string> trackList;
+    private List<TrackViewModel> tracks;
+    private List<string> trackNames;
+    private List<TrackVariantViewModel> variants;
     private bool dialogIsOpen = false;
     string newTrackName;
+    string newVariantName;
 
     protected override async Task OnInitializedAsync()
     {
@@ -71,8 +85,8 @@
     {
         try
         {
-            var tracks = await Http.GetFromJsonAsync<List<TrackViewModel>>("/api/Track/GetAll");
-            trackList = tracks.Select(t => t.Name).ToList();
+            tracks = await Http.GetFromJsonAsync<List<TrackViewModel>>("/api/Track/GetAll");
+            trackNames = tracks.Select(t => t.Name).ToList();
         }
         catch (Exception ex)
         {
@@ -80,13 +94,23 @@
         }
     }
 
+    private void LoadVariants()
+    {
+        var track = tracks.FirstOrDefault(t => t.Name == newTrackName);
+        variants = track?.Variants;
+    }
+
     private async Task AddTrack()
     {
         try
         {
-            var newTrack = await Http.GetFromJsonAsync<TrackViewModel>($"/api/Track/GetByName/{newTrackName}");
+            var newTrack = await Http.GetFromJsonAsync<ScheduleTrackViewModel>($"/api/Track/GetScheduleTrackByName/{newTrackName}");
+            var variant = tracks.FirstOrDefault(t => t.Name == newTrackName).Variants.FirstOrDefault(v => v.Name == newVariantName);
+            newTrack.VariantName = variant.Name;
+            newTrack.TrackType = variant.TrackType;
             currentTier.Tracks.Add(newTrack);
-            trackList.Remove(newTrackName);
+            trackNames.Remove(newTrackName);
+            await Http.PostAsJsonAsync("/api/Tier/Save", currentTier);
         }
         catch (Exception ex)
         {
@@ -96,6 +120,17 @@
         {
             dialogIsOpen = false;
             newTrackName = null;
+            newVariantName = null;
+            variants = null;
         }
     }
+
+    private void Cancel()
+    {
+        dialogIsOpen = false;
+        newTrackName = null;
+        newVariantName = null;
+        variants = null;
+    }
+
 }
