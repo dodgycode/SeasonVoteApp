@@ -13,17 +13,20 @@
 
     </EditForm>
     <MatDivider></MatDivider>
-    @foreach (var track in currentTier.Tracks)
-    {
-        <MatCard>
-            <MatCardContent>
-                <MatBlazor.MatHeadline6>@track.Name - @track.VariantName</MatBlazor.MatHeadline6>
-                <MatSubtitle1>@track.Availability</MatSubtitle1>
-                <MatSubtitle2>@track.TrackType</MatSubtitle2>
-            </MatCardContent>
-        </MatCard>
-        <br />
-    }
+   <MatTable Items="@currentTier.Tracks" ShowPaging="false">
+       <MatTableHeader>
+           <th>Circuit Name</th>
+           <th>Layout</th>
+           <th>Track Type</th>
+           <th>Availability</th>
+       </MatTableHeader>
+       <MatTableRow>
+           <td>@context.Name</td>
+           <td>@context.VariantName</td>
+           <td>@context.TrackType</td>
+           <td>@context.Availability</td>
+       </MatTableRow>
+   </MatTable>
 
     @if (trackNames != null)
     {
