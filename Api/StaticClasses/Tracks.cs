@@ -41,7 +41,15 @@ namespace SeasonVoting.Api.StaticClasses
             CircuitZolder,
             CircuitdeBarcelonaCatalunya,
             Circuitdes24HeuresduMans,
-            CrandonInternationalRaceway
+            CrandonInternationalRaceway,
+            DarlingtonRaceway,
+            DetroitGrandPrixatBelleIsle,
+            DoverInternationalSpeedway,
+            EldoraSpeedway,
+            FairburySpeedway,
+            FiveFlagsSpeedway,
+            IRacingSuperspeedway,
+            IndianapolisMotorSpeedway
         };
 
         public static Track LimeRockPark_2008Legacy => new Track
@@ -831,6 +839,141 @@ namespace SeasonVoting.Api.StaticClasses
                 {
                     Name = "Short",
                     TrackType = TrackType.DirtRoad
+                },
+            }
+        };
+        public static Track DarlingtonRaceway => new Track
+        {
+            Id = new ObjectId("60a7d52750a5905bc3dbedfb"),
+            Name = "Darlington Raceway",
+            TrackAvailability = TrackAvailability.Paid,
+            Url = "https://members.iracing.com/membersite/member/TrackDetail.do?trkid=115",
+            Variants = new List<TrackVariant>
+            {
+                new TrackVariant
+                {
+                    Name = "",
+                    TrackType = TrackType.Oval
+                },
+            }
+        };
+        public static Track DetroitGrandPrixatBelleIsle => new Track
+        {
+            Id = new ObjectId("60a7d5827a89ba7052c113c9"),
+            Name = "Detroit Grand Prix at Belle Isle",
+            TrackAvailability = TrackAvailability.Paid,
+            Url = "https://members.iracing.com/membersite/member/TrackDetail.do?trkid=319",
+            Variants = new List<TrackVariant>
+            {
+                new TrackVariant
+                {
+                    Name = "Belle Isle",
+                    TrackType = TrackType.Road
+                },
+            }
+        };
+        public static Track DoverInternationalSpeedway => new Track
+        {
+            Id = new ObjectId("60a7d5dcef43898af68fd69e"),
+            Name = "Dover International Speedway",
+            TrackAvailability = TrackAvailability.Paid,
+            Url = "https://members.iracing.com/membersite/member/TrackDetail.do?trkid=162",
+            Variants = new List<TrackVariant>
+            {
+                new TrackVariant
+                {
+                    Name = "",
+                    TrackType = TrackType.Oval
+                },
+            }
+        };
+        public static Track EldoraSpeedway => new Track
+        {
+            Id = new ObjectId("60a7d63fbd666f1cd3437387"),
+            Name = "Eldora Speedway",
+            TrackAvailability = TrackAvailability.Paid,
+            Url = "https://members.iracing.com/membersite/member/TrackDetail.do?trkid=273",
+            Variants = new List<TrackVariant>
+            {
+                new TrackVariant
+                {
+                    Name = "",
+                    TrackType = TrackType.DirtOval
+                },
+            }
+        };
+        public static Track FairburySpeedway => new Track
+        {
+            Id = new ObjectId("60a7d68d57fa35606f0e2cab"),
+            Name = "Fairbury Speedway",
+            TrackAvailability = TrackAvailability.Paid,
+            Url = "https://members.iracing.com/membersite/member/TrackDetail.do?trkid=344",
+            Variants = new List<TrackVariant>
+            {
+                new TrackVariant
+                {
+                    Name = "",
+                    TrackType = TrackType.DirtOval
+                },
+            }
+        };
+        public static Track FiveFlagsSpeedway => new Track
+        {
+            Id = new ObjectId("60a7d6c8aa8a176f23669006"),
+            Name = "Five Flags Speedway",
+            TrackAvailability = TrackAvailability.Paid,
+            Url = "https://members.iracing.com/membersite/member/TrackDetail.do?trkid=248",
+            Variants = new List<TrackVariant>
+            {
+                new TrackVariant
+                {
+                    Name = "",
+                    TrackType = TrackType.DirtOval
+                },
+            }
+        };
+        public static Track IRacingSuperspeedway => new Track
+        {
+            Id = new ObjectId("60a7d72c5dd59c3745bd0c79"),
+            Name = "IRacing Superspeedway",
+            TrackAvailability = TrackAvailability.Paid,
+            Url = "https://members.iracing.com/membersite/member/TrackDetail.do?trkid=384",
+            Variants = new List<TrackVariant>
+            {
+                new TrackVariant
+                {
+                    Name = "",
+                    TrackType = TrackType.Oval
+                },
+            }
+        };
+        public static Track IndianapolisMotorSpeedway => new Track
+        {
+            Id = new ObjectId("60a7e104d25b00971ceed4a3"),
+            Name = "Indianapolis Motor Speedway",
+            TrackAvailability = TrackAvailability.Paid,
+            Url = "https://members.iracing.com/membersite/member/TrackDetail.do?trkid=178",
+            Variants = new List<TrackVariant>
+            {
+                new TrackVariant
+                {
+                    Name = "IndyCar Oval",
+                    TrackType = TrackType.Oval
+                },
+                new TrackVariant
+                {
+                    Name = "Oval",
+                    TrackType = TrackType.Oval
+                },
+                new TrackVariant
+                {
+                    Name = "Road Course",
+                    TrackType = TrackType.Road
+                },
+                new TrackVariant
+                {
+                    Name = "Bike",
+                    TrackType = TrackType.Road
                 },
             }
         };

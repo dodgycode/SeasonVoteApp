@@ -6,7 +6,7 @@
 @if (hasLoaded)
 {@if (tracks != null)
     {
-        @*<MatTable Items="@tracks" ShowPaging="false">
+        <MatTable Items="@tracks" ShowPaging="false" PageSize="100">
             <MatTableHeader>
                 <th>Circuit Name</th>
                 <th>Availability</th>
@@ -19,18 +19,7 @@
                 <td>@context.NumberOfVariants</td>
                 <td><a href="@context.Url">Link</a></td>
             </MatTableRow>
-        </MatTable>*@
-
-        foreach (var track in tracks)
-        {
-            <MatCard>
-                <MatCardContent>
-                    <MatBlazor.MatHeadline6>@track.Name</MatBlazor.MatHeadline6>
-                    <MatSubtitle1>@track.Availability</MatSubtitle1>
-                    <MatSubtitle2>@track.NumberOfVariants layouts</MatSubtitle2>
-                </MatCardContent>
-            </MatCard>
-        }
+        </MatTable>
     }
     else
     {
