@@ -1,5 +1,4 @@
 ﻿@page "/tracks"
-@using SeasonVoting.Shared
 @inject HttpClient Http
 
 
@@ -7,6 +6,21 @@
 @if (hasLoaded)
 {@if (tracks != null)
     {
+        @*<MatTable Items="@tracks" ShowPaging="false">
+            <MatTableHeader>
+                <th>Circuit Name</th>
+                <th>Availability</th>
+                <th>Layouts</th>
+                <th>Details</th>
+            </MatTableHeader>
+            <MatTableRow>
+                <td>@context.Name</td>
+                <td>@context.Availability</td>
+                <td>@context.NumberOfVariants</td>
+                <td><a href="@context.Url">Link</a></td>
+            </MatTableRow>
+        </MatTable>*@
+
         foreach (var track in tracks)
         {
             <MatCard>
