@@ -4,7 +4,6 @@ using SeasonVoting.Api.Models.Config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SeasonVoting.Api.Repositories
 {
@@ -16,6 +15,7 @@ namespace SeasonVoting.Api.Repositories
             _season = Database.GetCollection<Season>(CollectionNames.Season);
         }
 
+        #region Gets
         public List<Season> GetAll()
         {
             return _season.Find(c => true).ToList();
@@ -25,7 +25,7 @@ namespace SeasonVoting.Api.Repositories
         {
             var seasons = GetAllIncomplete();
             var now = DateTime.UtcNow;
-            return seasons.OrderBy(s => s.StartDate).FirstOrDefault();
+            return seasons.OrderBy(s => s.Order).FirstOrDefault();
         }
 
         public List<Season> GetAllIncomplete()
@@ -35,8 +35,14 @@ namespace SeasonVoting.Api.Repositories
 
         public Season GetById(ObjectId id)
         {
-            return  _season.Find(c => c.Id == id).FirstOrDefault();
+            return _season.Find(c => c.Id == id).FirstOrDefault();
         }
+        public Season GetByYearAndQuarter(int year, int quarter)
+        {
+            return _season.Find(c => c.Year == year && c.Quarter == quarter).FirstOrDefault();
+        }
+        #endregion
+
         public Season Create(Season customer)
         {
             _season.InsertOne(customer);
@@ -50,5 +56,6 @@ namespace SeasonVoting.Api.Repositories
         {
             _season.DeleteOne(c => c.Id == id);
         }
+
     }
 }

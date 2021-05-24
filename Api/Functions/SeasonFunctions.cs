@@ -23,31 +23,22 @@ namespace SeasonVoting.Api.Functions
         {
             var service = new SeasonRepository();
             var currentSeason = service.GetCurrentSeason();
-            if (currentSeason != null)
+            if (currentSeason == null)
             {
-                var vm = Season.ToViewModel(currentSeason);
-                return new OkObjectResult(vm);
+                currentSeason = new Season
+                {
+                    Id = new ObjectId(),
+                    Name = "2008 S1",
+                    Year = 2008,
+                    Quarter = 1,
+                    Order = 1,
+                    IsComplete = false
+                };
+                service.Create(currentSeason);
             }
 
-            return new NoContentResult();
-        }
-
-        [FunctionName("GetDefaultNextSeason")]
-        public static IActionResult GetDefaultNextSeason(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "Season/ConstructNew")] HttpRequest req, ILogger log)
-        {
-            var service = new SeasonRepository();
-            var seasons = service.GetAll();
-            var now = DateTime.UtcNow;
-            var lastSeason = seasons.OrderByDescending(s => s.EndDate).FirstOrDefault(s => s.IsComplete);
-            var seasonVm = new SeasonViewModel { StartDate = DateTime.UtcNow, IsComplete = false };
-            if (lastSeason != null)
-            {
-                seasonVm.StartDate = lastSeason.EndDate;
-            }
-            seasonVm.EndDate = lastSeason.EndDate.AddDays(91); // 13 weeks
-
-            return new OkObjectResult(seasonVm);
+            var vm = Season.ToViewModel(currentSeason);
+            return new OkObjectResult(vm);
         }
 
         [FunctionName("CompleteCurrentSeason")]
@@ -57,24 +48,19 @@ namespace SeasonVoting.Api.Functions
             var content = new StreamReader(req.Body).ReadToEnd();
             var obj = JsonConvert.DeserializeObject<string>(content);
             var id = new ObjectId(obj);
-
             var service = new SeasonRepository();
-            var season = service.GetById(id);
-            season.IsComplete = true;
-            service.Update(id, season);
-            return new OkResult();
-        }
 
-        [FunctionName("AddSeason")]
-        public static IActionResult AddSeason(
-        [HttpTrigger(AuthorizationLevel.Function, "post", Route = "Season/Add")] HttpRequest req, ILogger log)
-        {
-            var content = new StreamReader(req.Body).ReadToEnd();
-            var vm = JsonConvert.DeserializeObject<SeasonViewModel>(content);
-            var season = Season.FromViewModel(vm);
+            var currentSeason = service.GetById(id);
+            currentSeason.IsComplete = true;
+            service.Update(id, currentSeason);
 
-            var service = new SeasonRepository();
-            service.Create(season);
+            var nextSeason = currentSeason.CreateNextSeason();
+            Season seasonThatCouldBeNextOne = service.GetByYearAndQuarter(nextSeason.Year, nextSeason.Quarter);
+            if(seasonThatCouldBeNextOne == null)
+            {
+                service.Create(nextSeason); // Does not yet exist, create it.
+            }
+
             return new OkResult();
         }
 

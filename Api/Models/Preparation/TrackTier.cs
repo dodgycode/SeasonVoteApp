@@ -2,7 +2,6 @@
 using MongoDB.Bson.Serialization.Attributes;
 using SeasonVoting.Api.StaticClasses;
 using SeasonVoting.Shared.Preparation;
-using System;
 using System.Collections.Generic;
 
 namespace SeasonVoting.Api.Models.Preparation
@@ -19,6 +18,9 @@ namespace SeasonVoting.Api.Models.Preparation
         public int NumberToBeSelectedFromTier { get; set; }
 
         public List<ScheduleTrack> Tracks { get; set; } = new List<ScheduleTrack>();
+        public int MaxSeasonsTrackCanRunPerYear { get; set; }
+        public int MaxConsecutiveSeasonsTracksCanRun { get; set; }
+        public int NumberOfTimesTrackWillRunOnceSelected { get; set; }
 
         #region Public Methods
         public static TierViewModel ToViewModel(TrackTier tier)

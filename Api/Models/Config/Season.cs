@@ -2,7 +2,6 @@
 using MongoDB.Bson.Serialization.Attributes;
 using SeasonVoting.Api.StaticClasses;
 using SeasonVoting.Shared.Config;
-using System;
 
 namespace SeasonVoting.Api.Models.Config
 {
@@ -16,12 +15,13 @@ namespace SeasonVoting.Api.Models.Config
         public string Name { get; set; }
 
         [BsonRequired]
-        [BsonRepresentation(BsonType.DateTime)]
-        public DateTime StartDate { get; set; }
+        public int Year { get; set; }
 
         [BsonRequired]
-        [BsonRepresentation(BsonType.DateTime)]
-        public DateTime EndDate { get; set; }
+        public int Quarter { get; set; }
+
+        [BsonRequired]
+        public int Order { get; set; }
 
         [BsonRequired]
         [BsonRepresentation(BsonType.Boolean)]
@@ -36,8 +36,8 @@ namespace SeasonVoting.Api.Models.Config
             {
                 Id = season.Id.ToString(),
                 Name = season.Name,
-                StartDate = season.StartDate,
-                EndDate = season.EndDate,
+                Year = season.Year,
+                Quarter = season.Quarter,
                 IsComplete = season.IsComplete
             };
         }
@@ -48,12 +48,46 @@ namespace SeasonVoting.Api.Models.Config
             {
                 Id = BsonTools.ResolveObjectId(vm.Id),
                 Name = vm.Name,
-                StartDate = vm.StartDate,
-                EndDate = vm.EndDate,
+                Year = vm.Year,
+                Quarter = vm.Quarter,
                 IsComplete = vm.IsComplete
             };
         }
 
+        public Season CreateNextSeason()
+        {
+            this.IsComplete = true;
+            var newSeason = new Season
+            {
+                Id = new ObjectId(),
+                Year = GetNextYear(),
+                Quarter = GetNextQuarter(),
+                Name = $"{Year} S{Quarter}",
+                Order = this.Order + 1,
+                IsComplete = false,
+            };
+            return newSeason;
+        }
+        #endregion
+
+        #region Private Methods
+        private int GetNextYear()
+        {
+            if(this.Quarter == 4)
+            {
+                return this.Year + 1;
+            }
+            return this.Year;
+        }
+
+        private int GetNextQuarter()
+        {
+            if(this.Quarter == 4)
+            {
+                return 1;
+            }
+            return this.Quarter + 1;
+        }
         #endregion
     }
 }
