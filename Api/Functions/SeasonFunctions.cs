@@ -7,10 +7,7 @@ using MongoDB.Bson;
 using Newtonsoft.Json;
 using SeasonVoting.Api.Models.Config;
 using SeasonVoting.Api.Repositories;
-using SeasonVoting.Shared.Config;
-using System;
 using System.IO;
-using System.Linq;
 
 namespace SeasonVoting.Api.Functions
 {

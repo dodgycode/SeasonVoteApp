@@ -37,9 +37,15 @@ namespace SeasonVoting.Api.Repositories
         {
             return _season.Find(c => c.Id == id).FirstOrDefault();
         }
+
         public Season GetByYearAndQuarter(int year, int quarter)
         {
             return _season.Find(c => c.Year == year && c.Quarter == quarter).FirstOrDefault();
+        }
+
+        public Season GetLastSeason()
+        {
+            return _season.Find(s => s.IsComplete).ToList().OrderByDescending(l => l.Order).FirstOrDefault();
         }
         #endregion
 

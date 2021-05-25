@@ -17,7 +17,7 @@
         <MatCard>
             <MatCardContent @onclick="()=> EditTier(tier)">
                 <MatBlazor.MatHeadline6>@tier.Name</MatBlazor.MatHeadline6>
-                <MatSubtitle1>@tier.NumberToBeSelectedFromTier tracks to be picked from a pool of @tier.Tracks.Count</MatSubtitle1>
+                <MatSubtitle1>@tier.NumberToBeSelected tracks to be picked from a pool of @tier.Tracks.Count</MatSubtitle1>
                 <MatBody1>
                     <ul>
                         @foreach (var track in tier.Tracks)
@@ -35,7 +35,7 @@
 @code {
     [Parameter]
     public string SeriesId { get; set; }
-    private SeriesViewModel currentSeries;
+    private ScheduleSeriesViewModel currentSeries;
 
     protected override async Task OnInitializedAsync()
     {
@@ -46,7 +46,7 @@
     {
         try
         {
-            currentSeries = await Http.GetFromJsonAsync<SeriesViewModel>($"/api/Series/GetById/{SeriesId}");
+            currentSeries = await Http.GetFromJsonAsync<ScheduleSeriesViewModel>($"/api/Series/GetById/{SeriesId}");
         }
         catch (Exception ex)
         {
@@ -57,10 +57,10 @@
 
     private void AddTier()
     {
-        currentSeries.Tiers.Add(new TierViewModel
+        currentSeries.Tiers.Add(new ScheduleTierViewModel
         {
             Name = $"Tier {currentSeries.Tiers.Count + 1}",
-            NumberToBeSelectedFromTier = 3,
+            NumberToBeSelected = 3,
             Tracks = new List<ScheduleTrackViewModel>()
         });
 
@@ -74,7 +74,7 @@
         }
     }
 
-    private void EditTier(TierViewModel tier)
+    private void EditTier(ScheduleTierViewModel tier)
     {
         NavManager.NavigateTo($"/EditTier/{tier.Id}");
     }

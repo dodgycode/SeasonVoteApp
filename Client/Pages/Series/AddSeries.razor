@@ -6,7 +6,6 @@
 <EditForm Model="@series">
     <DataAnnotationsValidator />
     <ValidationSummary />
-
     <p>
         <MatTextField Label="Name" @bind-Value="series.Name" />
     </p>
@@ -21,7 +20,7 @@
 
 
 @code {
-    private SeriesViewModel series = new SeriesViewModel();
+    private ScheduleSeriesViewModel series = new ScheduleSeriesViewModel();
 
     protected override async Task OnInitializedAsync()
     {
@@ -45,7 +44,7 @@
     {
         try
         {
-            series = await Http.GetFromJsonAsync<SeriesViewModel>("/api/Series/Construct");
+            series = await Http.GetFromJsonAsync<ScheduleSeriesViewModel>("/api/Series/Construct");
         }
         catch (Exception ex)
         {

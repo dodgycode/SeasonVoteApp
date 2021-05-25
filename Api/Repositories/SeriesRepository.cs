@@ -7,33 +7,33 @@ namespace SeasonVoting.Api.Repositories
 {
     public class SeriesRepository : RepositoryBase
     {
-        private readonly IMongoCollection<Series> _series;
+        private readonly IMongoCollection<ScheduleSeries> _series;
         public SeriesRepository()
         {
-            _series = Database.GetCollection<Series>(CollectionNames.Series);
+            _series = Database.GetCollection<ScheduleSeries>(CollectionNames.Series);
         }
 
-        public List<Series> GetAll()
+        public List<ScheduleSeries> GetAll()
         {
             return _series.Find(c => true).ToList();
         }
 
-        public Series GetById(ObjectId id)
+        public ScheduleSeries GetById(ObjectId id)
         {
             return  _series.Find(c => c.Id == id).FirstOrDefault();
         }
 
-        public List<Series> GetBySeasonId(ObjectId seasonId)
+        public List<ScheduleSeries> GetBySeasonId(ObjectId seasonId)
         {
             return  _series.Find(c => c.SeasonId == seasonId).ToList();
         }
 
-        public Series Create(Series series)
+        public ScheduleSeries Create(ScheduleSeries series)
         {
             _series.InsertOne(series);
             return series;
         }
-        public void Update(ObjectId id, Series series)
+        public void Update(ObjectId id, ScheduleSeries series)
         {
             _series.ReplaceOne(c => c.Id == id, series);
         }

@@ -27,7 +27,7 @@ namespace SeasonVoting.Api.Functions
             var tiers = series.SelectMany(s => s.TrackTiers).ToList();
             var tier = tiers.FirstOrDefault(t => t.Id == BsonTools.ResolveObjectId(tierId));
 
-            var vm = TrackTier.ToViewModel(tier);
+            var vm = ScheduleTrackTier.ToViewModel(tier);
             return new OkObjectResult(vm);
         }
         
@@ -36,7 +36,7 @@ namespace SeasonVoting.Api.Functions
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "Tier/Save")] HttpRequest req, ILogger log)
         {
             var content = new StreamReader(req.Body).ReadToEnd();
-            var vm = JsonConvert.DeserializeObject<TierViewModel>(content);
+            var vm = JsonConvert.DeserializeObject<ScheduleTierViewModel>(content);
             var seasonService = new SeasonRepository();
             var currentSeason = seasonService.GetCurrentSeason();
             var seriesService = new SeriesRepository();
@@ -44,7 +44,7 @@ namespace SeasonVoting.Api.Functions
             var currentSeries = series.FirstOrDefault(s=>s.TrackTiers.Any(t => t.Id == BsonTools.ResolveObjectId(vm.Id)));
             var tier = currentSeries.TrackTiers.FirstOrDefault(t => t.Id == BsonTools.ResolveObjectId(vm.Id));
             currentSeries.TrackTiers.Remove(tier);
-            currentSeries.TrackTiers.Add(TrackTier.FromViewModel(vm));
+            currentSeries.TrackTiers.Add(ScheduleTrackTier.FromViewModel(vm));
 
             seriesService.Update(currentSeries.Id, currentSeries);
 

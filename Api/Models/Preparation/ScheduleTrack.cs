@@ -4,16 +4,15 @@ using SeasonVoting.Api.Enums;
 using SeasonVoting.Api.Models.Config;
 using SeasonVoting.Api.StaticClasses;
 using SeasonVoting.Shared.Preparation;
-using System;
 using System.Collections.Generic;
 
 namespace SeasonVoting.Api.Models.Preparation
 {
     public class ScheduleTrack
     {
-        [BsonId]
+        [BsonRequired]
         [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId TrackId { get; set; }
+        public ObjectId Id { get; set; }
 
         [BsonRequired]
         public string Name { get; set; }
@@ -25,11 +24,20 @@ namespace SeasonVoting.Api.Models.Preparation
         public TrackVariant Variant { get; set; }
 
         #region Public Methods
+        public static List<ScheduleTrackViewModel> ToViewModel(List<ScheduleTrack> tracks)
+        {
+            var scheduletracks = new List<ScheduleTrackViewModel>();
+            foreach (var track in tracks)
+            {
+                scheduletracks.Add(ScheduleTrack.ToViewModel(track));
+            }
+            return scheduletracks;
+        }
         public static ScheduleTrackViewModel ToViewModel(ScheduleTrack track)
         {
             var vm = new ScheduleTrackViewModel
             {
-                TrackId = BsonTools.ResolveObjectId(track.TrackId).ToString(),
+                TrackId = BsonTools.ResolveObjectId(track.Id).ToString(),
                 Name = track.Name,
                 VariantName = track.Variant.Name,
                 Availability = EnumTools.ToViewModel(track.TrackAvailability),
@@ -52,7 +60,7 @@ namespace SeasonVoting.Api.Models.Preparation
         {
             return new ScheduleTrack
             {
-                TrackId = BsonTools.ResolveObjectId(vm.TrackId),
+                Id = BsonTools.ResolveObjectId(vm.TrackId),
                 Name = vm.Name,
                 TrackAvailability = EnumTools.FromTrackAvailabilityString(vm.Availability),
                 Variant = new TrackVariant {

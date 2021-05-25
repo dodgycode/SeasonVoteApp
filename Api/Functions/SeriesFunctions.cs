@@ -26,10 +26,10 @@ namespace SeasonVoting.Api.Functions
             var seriesService = new SeriesRepository();
             var seriesList = seriesService.GetBySeasonId(currentSeason.Id);
 
-            var vms = new List<SeriesViewModel>();
+            var vms = new List<ScheduleSeriesViewModel>();
             foreach (var series in seriesList)
             {
-                vms.Add(Series.ToViewModel(series));
+                vms.Add(ScheduleSeries.ToViewModel(series));
             }
 
             return new OkObjectResult(vms.ToArray());
@@ -41,7 +41,7 @@ namespace SeasonVoting.Api.Functions
         {
             var seriesService = new SeriesRepository();
             var series = seriesService.GetById(new ObjectId(seriesId));
-            var vm = Series.ToViewModel(series);
+            var vm = ScheduleSeries.ToViewModel(series);
            
             return new OkObjectResult(vm);
         }
@@ -51,8 +51,8 @@ namespace SeasonVoting.Api.Functions
         [HttpTrigger(AuthorizationLevel.Function, "post", Route = "Series/Add")] HttpRequest req, ILogger log)
         {
             var content = new StreamReader(req.Body).ReadToEnd();
-            var vm = JsonConvert.DeserializeObject<SeriesViewModel>(content);
-            var series = Series.FromViewModel(vm);
+            var vm = JsonConvert.DeserializeObject<ScheduleSeriesViewModel>(content);
+            var series = ScheduleSeries.FromViewModel(vm);
 
             var service = new SeriesRepository();
             service.Create(series);
@@ -64,8 +64,8 @@ namespace SeasonVoting.Api.Functions
         [HttpTrigger(AuthorizationLevel.Function, "post", Route = "Series/Update")] HttpRequest req, ILogger log)
         {
             var content = new StreamReader(req.Body).ReadToEnd();
-            var vm = JsonConvert.DeserializeObject<SeriesViewModel>(content);
-            var series = Series.FromViewModel(vm);
+            var vm = JsonConvert.DeserializeObject<ScheduleSeriesViewModel>(content);
+            var series = ScheduleSeries.FromViewModel(vm);
 
             var service = new SeriesRepository();
             service.Update(series.Id, series);
@@ -78,8 +78,8 @@ namespace SeasonVoting.Api.Functions
         {
             var service = new SeasonRepository();
             var season = service.GetCurrentSeason();
-            var series = new Series { Id = ObjectId.GenerateNewId(), SeasonId = season.Id };
-            var vm = Series.ToViewModel(series);
+            var series = new ScheduleSeries { Id = ObjectId.GenerateNewId(), SeasonId = season.Id };
+            var vm = ScheduleSeries.ToViewModel(series);
             return new OkObjectResult(vm);
         }
         #endregion

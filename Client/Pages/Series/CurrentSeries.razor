@@ -16,18 +16,19 @@
                     <MatBody1>@series.Description</MatBody1>
                 </MatCardContent>
             </MatCard>
-            <br />
-            <MatButtonLink href="addseries">Add a new Series</MatButtonLink>
         }
-    } }
+    }
+    <br />
+    <MatButtonLink href="addseries">Add a new Series</MatButtonLink>
+}
 else
 {
-    <MatProgressCircle Indeterminate="true" Size="MatProgressCircleSize.Medium" />
+    <LoadingSpinner/>
 }
 
 
 @code {
-    private List<SeriesViewModel> currentSeries;
+    private List<ScheduleSeriesViewModel> currentSeries;
     private bool hasLoaded = false;
 
     protected override async Task OnInitializedAsync()
@@ -40,7 +41,7 @@ else
 
         try
         {
-            currentSeries = await Http.GetFromJsonAsync<List<SeriesViewModel>>("/api/Series/GetCurrent");
+            currentSeries = await Http.GetFromJsonAsync<List<ScheduleSeriesViewModel>>("/api/Series/GetCurrent");
         }
         catch (Exception ex)
         {
@@ -53,7 +54,7 @@ else
         }
     }
 
-    private void EditSeries(SeriesViewModel series)
+    private void EditSeries(ScheduleSeriesViewModel series)
     {
         NavManager.NavigateTo($"/EditSeries/{series.Id}");
     }

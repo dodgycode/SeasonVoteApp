@@ -9,24 +9,33 @@
     <EditForm Model="@currentTier">
 
         <MatTextField Label="Tier Name" @bind-Value="currentTier.Name" />
-        <MatNumericUpDownField Label="Number of tracks to be selected" @bind-Value="currentTier.NumberToBeSelectedFromTier" />
+        <MatNumericUpDownField Label="Tracks to be selected in tier" @bind-Value="currentTier.NumberToBeSelected" />
+        <MatNumericUpDownField Label="Number of tracks each voter should select" @bind-Value="currentTier.NumberToBeVotedOn" />
+        <MatNumericUpDownField Label="Max seasons track can run in a year" @bind-Value="currentTier.MaxSeasonsTrackCanRunPerYear" />
+        <MatNumericUpDownField Label="Max consecutive seasons track can run" @bind-Value="currentTier.MaxConsecutiveSeasonsTracksCanRun" />
+        <MatNumericUpDownField Label="Minimum consecutive seasons track will run" @bind-Value="currentTier.MinConsecutiveSeasonsTrackWillRunOnceSelected" />
+        <br />
+        @if (currentTier.NumberToBeVotedOn > 1)
+        {
+            <MatSlideToggle TValue="bool" Label="Require order of preference?" @bind-Value="currentTier.SelectionsShouldBeOrdered" />
+        }
 
     </EditForm>
     <MatDivider></MatDivider>
-   <MatTable Items="@currentTier.Tracks" ShowPaging="false" PageSize="100">
-       <MatTableHeader>
-           <th>Circuit Name</th>
-           <th>Layout</th>
-           <th>Track Type</th>
-           <th>Availability</th>
-       </MatTableHeader>
-       <MatTableRow>
-           <td>@context.Name</td>
-           <td>@context.VariantName</td>
-           <td>@context.TrackType</td>
-           <td>@context.Availability</td>
-       </MatTableRow>
-   </MatTable>
+    <MatTable Items="@currentTier.Tracks" ShowPaging="false" PageSize="100">
+        <MatTableHeader>
+            <th>Circuit Name</th>
+            <th>Layout</th>
+            <th>Track Type</th>
+            <th>Availability</th>
+        </MatTableHeader>
+        <MatTableRow>
+            <td>@context.Name</td>
+            <td>@context.VariantName</td>
+            <td>@context.TrackType</td>
+            <td>@context.Availability</td>
+        </MatTableRow>
+    </MatTable>
 
     @if (trackNames != null)
     {
@@ -52,16 +61,29 @@
             <MatButton @onclick="() => dialogIsOpen = true">Add Track</MatButton>
         }
     }
+    <br />
+    @if (isLoading)
+    {
+        <LoadingSpinner />
+    }
+    else
+    {
+        <MatButton Raised="true" OnClick="@Save">Save</MatButton>
+    }
+
+    <SaveSuccessMessage Success="@savedSuccessfully"/>
 }
 
 @code {
     [Parameter]
     public string TierId { get; set; }
-    private TierViewModel currentTier;
+    private ScheduleTierViewModel currentTier;
     private List<TrackViewModel> tracks;
     private List<string> trackNames;
     private List<TrackVariantViewModel> variants;
     private bool dialogIsOpen = false;
+    private bool isLoading = false;
+    private bool savedSuccessfully = false;
     string newTrackName;
     string newVariantName;
 
@@ -75,7 +97,7 @@
     {
         try
         {
-            currentTier = await Http.GetFromJsonAsync<TierViewModel>($"/api/Tier/GetById/{TierId}");
+            currentTier = await Http.GetFromJsonAsync<ScheduleTierViewModel>($"/api/Tier/GetById/{TierId}");
         }
         catch (Exception ex)
         {
@@ -113,7 +135,7 @@
             newTrack.TrackType = variant.TrackType;
             currentTier.Tracks.Add(newTrack);
             trackNames.Remove(newTrackName);
-            await Http.PostAsJsonAsync("/api/Tier/Save", currentTier);
+            await Save();
         }
         catch (Exception ex)
         {
@@ -125,6 +147,24 @@
             newTrackName = null;
             newVariantName = null;
             variants = null;
+        }
+    }
+
+    private async Task Save()
+    {
+        try
+        {
+            isLoading = true;
+            await Http.PostAsJsonAsync("/api/Tier/Save", currentTier);
+            savedSuccessfully = true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+        finally
+        {
+            isLoading = false;
         }
     }
 
