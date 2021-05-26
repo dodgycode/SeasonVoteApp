@@ -7,11 +7,18 @@
 
     <div class="main">
         <div class="top-row px-4">
-            <LoginDisplay />
+            <LoginDisplay />            
+            <form action="https://www.paypal.com/donate" method="post" target="_top">
+                <input type="hidden" name="business" value="BALPTPXTMP9DE" />
+                <input type="hidden" name="currency_code" value="USD" />
+                <input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif" border="0" style="margin-left:5px" name="submit" title="Donations for upkeep are welcome" alt="Donate with PayPal button" />
+                <img alt="" border="0" src="https://www.paypal.com/en_GB/i/scr/pixel.gif" width="1" height="1" />
+            </form>
         </div>
 
         <div class="content px-4">
             @Body
         </div>
+
     </div>
 </div>

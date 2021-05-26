@@ -1,0 +1,98 @@
+﻿@page "/SeriesVoting/{seriesId}"
+@inject HttpClient Http
+@inject NavigationManager NavManager
+
+@if (currentVoting == null)
+{
+    <h4>Registration</h4>
+    <p>Please enter your name exactly as it appears on your iRacing account.</p>
+    <MatTextField Label="iRacing Account Name" @bind-Value="voterName" />
+    <MatButton @onclick="CreateBallot">Begin Voting!</MatButton>
+}
+else
+{
+    <MatTabGroup>
+        @foreach(var tier in currentVoting.Tiers)
+                {
+            <MatTab Label="@tier.Name">
+                <MatList>
+                    @foreach(var track in tier.Tracks)
+                        {
+                            <MatListItem>@track.Name</MatListItem>
+                        }
+                </MatList>
+            </MatTab>
+                }
+    </MatTabGroup>
+}
+
+
+@if (currentSeries != null)
+{
+    @*<h2>@currentSeries.Name</h2>
+    <h4>@currentSeries.Tiers.Count Tiers</h4>
+    <p>@currentSeries.Description</p>
+
+    <MatDivider></MatDivider>
+
+    <br />
+
+    @foreach (var tier in currentSeries.Tiers)
+    {
+        <MatCard>
+            <MatCardContent @onclick="()=> EditTier(tier)">
+                <MatBlazor.MatHeadline6>@tier.Name</MatBlazor.MatHeadline6>
+                <MatSubtitle1>@tier.NumberToBeSelected tracks to be picked from a pool of @tier.Tracks.Count</MatSubtitle1>
+                <MatBody1>
+                    <ul>
+                        @foreach (var track in tier.Tracks)
+                        {
+                            <li>@track.Name</li>
+                        }
+                    </ul>
+                </MatBody1>
+            </MatCardContent>
+        </MatCard>
+    }
+    <MatButton @onclick="AddTier">Add a new Tier</MatButton>*@
+}
+
+
+@code {
+    [Parameter]
+    public string SeriesId { get; set; }
+    private string voterName;
+    private ScheduleSeriesViewModel currentSeries;
+    private SeriesVotingViewModel currentVoting;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetCurrentSeries();
+    }
+
+    private async Task GetCurrentSeries()
+    {
+        try
+        {
+            currentSeries = await Http.GetFromJsonAsync<ScheduleSeriesViewModel>($"/api/Series/GetById/{SeriesId}");
+        }
+        catch (Exception ex)
+        {
+            currentSeries = null;
+            Console.WriteLine(ex.ToString());
+        }
+    }
+
+    private async Task CreateBallot()
+    {
+        try
+        {
+            currentVoting = await Http.GetJsonAsync<SeriesVotingViewModel>($"/api/Voting/CreateBallot/{SeriesId}/{voterName}");
+        }
+        catch (Exception ex)
+        {
+            currentSeries = null;
+            Console.WriteLine(ex.ToString());
+        }
+    }
+}

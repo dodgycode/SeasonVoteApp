@@ -7,7 +7,6 @@ using MongoDB.Bson;
 using Newtonsoft.Json;
 using SeasonVoting.Api.Models.Preparation;
 using SeasonVoting.Api.Repositories;
-using SeasonVoting.Shared;
 using SeasonVoting.Shared.Preparation;
 using System.Collections.Generic;
 using System.IO;

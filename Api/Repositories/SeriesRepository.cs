@@ -41,5 +41,5 @@ namespace SeasonVoting.Api.Repositories
         {
             _series.DeleteOne(c => c.Id == id);
         }
-    }
+    }  
 }

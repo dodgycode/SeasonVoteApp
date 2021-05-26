@@ -5,5 +5,6 @@
         public const string Season = "season";
         public const string Track = "track";
         public const string Series = "series";
+        public const string Voting = "voting";
     }
 }
