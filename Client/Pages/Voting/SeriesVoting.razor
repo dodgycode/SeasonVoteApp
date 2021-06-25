@@ -11,77 +11,25 @@
 }
 else
 {
-    <MatTabGroup>
-        @foreach(var tier in currentVoting.Tiers)
-                {
-            <MatTab Label="@tier.Name">
-                <MatList>
-                    @foreach(var track in tier.Tracks)
-                        {
-                            <MatListItem>@track.Name</MatListItem>
-                        }
-                </MatList>
-            </MatTab>
-                }
-    </MatTabGroup>
-}
-
-
-@if (currentSeries != null)
-{
-    @*<h2>@currentSeries.Name</h2>
-    <h4>@currentSeries.Tiers.Count Tiers</h4>
-    <p>@currentSeries.Description</p>
-
-    <MatDivider></MatDivider>
-
-    <br />
-
-    @foreach (var tier in currentSeries.Tiers)
+    @foreach (var tier in currentVoting.Tiers)
     {
-        <MatCard>
-            <MatCardContent @onclick="()=> EditTier(tier)">
-                <MatBlazor.MatHeadline6>@tier.Name</MatBlazor.MatHeadline6>
-                <MatSubtitle1>@tier.NumberToBeSelected tracks to be picked from a pool of @tier.Tracks.Count</MatSubtitle1>
-                <MatBody1>
-                    <ul>
-                        @foreach (var track in tier.Tracks)
-                        {
-                            <li>@track.Name</li>
-                        }
-                    </ul>
-                </MatBody1>
-            </MatCardContent>
-        </MatCard>
+        <TierVoting Tier="@tier"/>
+        <br />
     }
-    <MatButton @onclick="AddTier">Add a new Tier</MatButton>*@
 }
-
 
 @code {
     [Parameter]
     public string SeriesId { get; set; }
     private string voterName;
-    private ScheduleSeriesViewModel currentSeries;
     private SeriesVotingViewModel currentVoting;
+    private bool showTooManySelectionsError = false;
+    private string tooManySeletionsMessage;
 
-    protected override async Task OnInitializedAsync()
-    {
-        await GetCurrentSeries();
-    }
-
-    private async Task GetCurrentSeries()
-    {
-        try
-        {
-            currentSeries = await Http.GetFromJsonAsync<ScheduleSeriesViewModel>($"/api/Series/GetById/{SeriesId}");
-        }
-        catch (Exception ex)
-        {
-            currentSeries = null;
-            Console.WriteLine(ex.ToString());
-        }
-    }
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    await GetCurrentSeries();
+    //}
 
     private async Task CreateBallot()
     {
@@ -91,8 +39,24 @@ else
         }
         catch (Exception ex)
         {
-            currentSeries = null;
+            currentVoting = null;
             Console.WriteLine(ex.ToString());
         }
+    }
+
+    private void ValidateSelections(TierVotingViewModel tier, TrackVotingViewModel track)
+    {
+        var selectedTracks = tier.Tracks.Where(t => t.Order != null);
+        if (selectedTracks.Count() >= tier.Rules.NumberToBeVotedOn)
+        {
+            // Already selected as many as possible
+            tooManySeletionsMessage = $"You cannot select more than {tier.Rules.NumberToBeVotedOn} tracks for {tier.Name}";
+            showTooManySelectionsError = true;
+        }
+        else
+        {
+            track.Order = 1;
+        }
+
     }
 }

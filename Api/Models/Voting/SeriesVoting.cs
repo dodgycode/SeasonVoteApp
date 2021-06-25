@@ -33,7 +33,7 @@ namespace SeasonVoting.Api.Models.Voting
        
         #region Public Methods
 
-        public static SeriesVotingViewModel ToViewModel(SeriesVoting ballot)
+        public static SeriesVotingViewModel ToViewModel(SeriesVoting ballot, ScheduleSeries series)
         {
             return new SeriesVotingViewModel
             {
@@ -41,7 +41,7 @@ namespace SeasonVoting.Api.Models.Voting
                 VoterName = ballot.VoterName,
                 SeasonId = ballot.SeasonId.ToString(),
                 SeriesId = ballot.SeriesId.ToString(),
-                Tiers = TierVoting.ToViewModel(ballot.Tiers)
+                Tiers = TierVoting.ToViewModel(ballot.Tiers, series.TrackTiers)
             };
         } 
         #endregion

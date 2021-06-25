@@ -38,7 +38,16 @@ namespace SeasonVoting.Shared.Preparation
         /// Voters should number their choices (e.g. 1,2,3).
         /// </summary>
         public bool SelectionsShouldBeOrdered { get; set; }
+
         #endregion
+
+        public string PleaseSelectXManyTracksMessage() 
+        {
+            var message = $"Please select {NumberToBeVotedOn} ";
+            var tracks = NumberToBeVotedOn > 1 ? "tracks" : "track";
+            message += tracks;
+            return message; 
+        } 
     }
 
 }

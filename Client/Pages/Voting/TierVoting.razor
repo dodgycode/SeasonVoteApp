@@ -1,0 +1,90 @@
+﻿@page "/Pages/Voting/{tier}"
+@using System.Linq;
+
+<MatPaper Elevation="5">
+    <h4>@Tier.Name</h4>
+    <p>@Tier.Rules.PleaseSelectXManyTracksMessage()</p>
+    @if (Tier.Rules.SelectionsShouldBeOrdered)
+    {
+        <ol>
+            @foreach (var selectedTrack in Tier.Tracks.OrderBy(t => t.Order))
+            {
+                <li>@selectedTrack.Name</li>
+            }
+        </ol>
+    }
+    else
+    {
+        <ul>
+            @foreach (var selectedTrack in Tier.Tracks.OrderBy(t => t.Order))
+            {
+                <li>@selectedTrack.Name</li>
+            }
+        </ul>
+    }
+
+    <MatChipSet Filter="true" @bind-SelectedChips="selectedTracks">
+        @foreach (var track in Tier.Rules.Tracks)
+        {
+            <MatChip Label="@track.Name" IsCheckable="true" @onclick="() => ValidateSelections(track)"></MatChip>
+        }
+    </MatChipSet>
+    @if (Tier.Tracks.Any())
+    {
+        <MatButton OnClick="@Clear">Clear Selections</MatButton>
+    }
+</MatPaper>
+
+<SnackBarMessage Message="@tooManySeletionsMessage" Show="@showTooManySelectionsError" />
+
+
+@functions{
+    [Parameter]
+    public TierVotingViewModel Tier { get; set; }
+
+    private bool showTooManySelectionsError = false;
+    private string tooManySeletionsMessage;
+    private MatChip[] selectedTracks = null;
+
+    private void ValidateSelections(ScheduleTrackViewModel track)
+    {
+        var alreadyExists = Tier.Tracks.Any(t => t.Name == track.Name);
+        if (alreadyExists)
+        {
+            // remove the track
+            var existingTrack = Tier.Tracks.FirstOrDefault(t => t.Name == track.Name);
+            Tier.Tracks.Remove(existingTrack);
+        }
+        else
+        {
+            // add the track
+            var highestOrder = Tier.Tracks.Select(t => t.Order).Max();
+            if (highestOrder == null) { highestOrder = 0; }
+            if (highestOrder == Tier.Rules.NumberToBeVotedOn)
+            {
+                // Already selected as many as possible
+                selectedTracks = selectedTracks.Take(selectedTracks.Count() - 1).ToArray();
+                tooManySeletionsMessage = $"You cannot select more than {Tier.Rules.NumberToBeVotedOn} tracks for {Tier.Name}";
+                showTooManySelectionsError = true;
+            }
+            else
+            {
+                var votingTrack = new TrackVotingViewModel
+                {
+                    Name = track.Name,
+                    TrackId = track.TrackId,
+                    Order = highestOrder + 1
+                };
+                Tier.Tracks.Add(votingTrack);
+            }
+        }
+
+
+    }
+
+    private void Clear()
+    {
+        selectedTracks = null;
+        Tier.Tracks = new List<TrackVotingViewModel>();
+    }
+}

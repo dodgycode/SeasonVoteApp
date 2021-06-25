@@ -27,7 +27,7 @@ namespace SeasonVoting.Api.Functions
 
             // Create new SeriesVoting object bases on name and ScheduleSeries
             var ballot = new SeriesVoting(voterName, series);
-            var ballotVm = SeriesVoting.ToViewModel(ballot);
+            var ballotVm = SeriesVoting.ToViewModel(ballot, series);
 
             return new OkObjectResult(ballotVm);
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SeasonVoting.Shared.Preparation;
+using System.Collections.Generic;
 
 namespace SeasonVoting.Shared.Voting
 {
@@ -11,5 +12,7 @@ namespace SeasonVoting.Shared.Voting
         public string Name { get; set; }
 
         public List<TrackVotingViewModel> Tracks { get; set; }
+
+        public ScheduleTierViewModel Rules { get; set; }
     }
 }

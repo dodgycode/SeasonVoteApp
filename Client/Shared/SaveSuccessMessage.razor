@@ -1,9 +1,0 @@
-﻿@page "/shared/{success}"
-<MatSnackbar @bind-IsOpen="@Success" Timeout="5000">
-    <MatSnackbarContent>Changes saved successfully!</MatSnackbarContent>
-</MatSnackbar>
-
-@functions{
-    [Parameter]
-    public bool Success { get; set; }
-}

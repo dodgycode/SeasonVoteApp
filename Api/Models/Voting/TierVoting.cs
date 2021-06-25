@@ -4,6 +4,7 @@ using SeasonVoting.Api.Models.Preparation;
 using SeasonVoting.Shared.Voting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SeasonVoting.Api.Models.Voting
 {
@@ -40,28 +41,30 @@ namespace SeasonVoting.Api.Models.Voting
                 Id = ObjectId.GenerateNewId(),
                 TierId = scheduleTier.Id,
                 Name= scheduleTier.Name,
-                Tracks = TrackVoting.FromScheduleTrack(scheduleTier.Tracks)
+                Tracks = new List<TrackVoting>()
             };
         }
 
-        public static List<TierVotingViewModel> ToViewModel(List<TierVoting> tiers)
+        public static List<TierVotingViewModel> ToViewModel(List<TierVoting> tiers, List<ScheduleTrackTier> scheduleTrackTiers)
         {
             var vms = new List<TierVotingViewModel>();
             foreach(var tier in tiers)
             {
-                vms.Add(TierVoting.ToViewModel(tier));
+                var scheduleTier = scheduleTrackTiers.FirstOrDefault(t => t.Id == tier.TierId);
+                vms.Add(TierVoting.ToViewModel(tier, scheduleTier));
             }
             return vms;
         }
 
-        private static TierVotingViewModel ToViewModel(TierVoting tier)
+        private static TierVotingViewModel ToViewModel(TierVoting tier, ScheduleTrackTier scheduleTrackTier)
         {
             return new TierVotingViewModel
             {
                 Id = new ObjectId().ToString(),
                 TierId = tier.Id.ToString(),
                 Name = tier.Name,
-                Tracks = TrackVoting.ToViewModel(tier.Tracks)
+                Tracks = TrackVoting.ToViewModel(tier.Tracks),
+                Rules = ScheduleTrackTier.ToViewModel(scheduleTrackTier)
             };
         }
         #endregion

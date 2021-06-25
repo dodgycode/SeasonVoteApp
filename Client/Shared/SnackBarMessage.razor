@@ -1,0 +1,11 @@
+﻿@page "/shared/{show}/{message}"
+<MatSnackbar @bind-IsOpen="@Show" Timeout="5000">
+    <MatSnackbarContent>@Message</MatSnackbarContent>
+</MatSnackbar>
+
+@functions{
+    [Parameter]
+    public bool Show { get; set; }
+    [Parameter]
+    public string Message { get; set; }
+}

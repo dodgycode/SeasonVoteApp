@@ -71,7 +71,7 @@
         <MatButton Raised="true" OnClick="@Save">Save</MatButton>
     }
 
-    <SaveSuccessMessage Success="@savedSuccessfully"/>
+    <SnackBarMessage Show="@savedSuccessfully" Message="Changes saved successfully"/>
 }
 
 @code {
