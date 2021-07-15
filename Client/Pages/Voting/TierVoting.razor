@@ -3,7 +3,7 @@
 
 <MatPaper Elevation="5">
     <h4>@Tier.Name</h4>
-    <p>@Tier.Rules.PleaseSelectXManyTracksMessage()</p>
+    <p>@Tier.PleaseSelectXManyTracksMessage()</p>
     @if (Tier.Rules.SelectionsShouldBeOrdered)
     {
         <ol>
@@ -23,12 +23,15 @@
         </ul>
     }
 
-    <MatChipSet Filter="true" @bind-SelectedChips="selectedTracks">
-        @foreach (var track in Tier.Rules.Tracks)
-        {
-            <MatChip Label="@track.Name" IsCheckable="true" @onclick="() => ValidateSelections(track)"></MatChip>
-        }
-    </MatChipSet>
+    @if (ChipsEnabled())
+    {
+        <MatChipSet Filter="true" @bind-SelectedChips="selectedTracks">
+            @foreach (var track in Tier.Rules.Tracks)
+            {
+                <MatChip Label="@track.Name" IsCheckable="true" @onclick="() => ValidateSelections(track)"></MatChip>
+            }
+        </MatChipSet>
+    }
     @if (Tier.Tracks.Any())
     {
         <MatButton OnClick="@Clear">Clear Selections</MatButton>
@@ -45,6 +48,8 @@
     private bool showTooManySelectionsError = false;
     private string tooManySeletionsMessage;
     private MatChip[] selectedTracks = null;
+
+    public bool IsComplete => Tier.Tracks.Count == Tier.Rules.NumberToBeVotedOn;
 
     private void ValidateSelections(ScheduleTrackViewModel track)
     {
@@ -78,13 +83,20 @@
                 Tier.Tracks.Add(votingTrack);
             }
         }
-
-
     }
 
     private void Clear()
     {
         selectedTracks = null;
         Tier.Tracks = new List<TrackVotingViewModel>();
+    }
+
+    private bool ChipsEnabled()
+    {
+        if(Tier.Tracks.Count == Tier.Rules.NumberToBeVotedOn)
+        {
+            return false;
+        }
+        return true;
     }
 }

@@ -41,13 +41,6 @@ namespace SeasonVoting.Shared.Preparation
 
         #endregion
 
-        public string PleaseSelectXManyTracksMessage() 
-        {
-            var message = $"Please select {NumberToBeVotedOn} ";
-            var tracks = NumberToBeVotedOn > 1 ? "tracks" : "track";
-            message += tracks;
-            return message; 
-        } 
     }
 
 }
