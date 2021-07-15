@@ -1,14 +1,18 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using SeasonVoting.Api.Models.Preparation;
+using SeasonVoting.Api.StaticClasses;
 using SeasonVoting.Shared.Voting;
-using System;
 using System.Collections.Generic;
 
 namespace SeasonVoting.Api.Models.Voting
 {
     public class SeriesVoting
     {
+        public SeriesVoting()
+        {
+
+        }
         public SeriesVoting(string voterName, ScheduleSeries series)
         {
             VoterName = voterName;
@@ -42,6 +46,17 @@ namespace SeasonVoting.Api.Models.Voting
                 SeasonId = ballot.SeasonId.ToString(),
                 SeriesId = ballot.SeriesId.ToString(),
                 Tiers = TierVoting.ToViewModel(ballot.Tiers, series.TrackTiers)
+            };
+        } 
+        public static SeriesVoting FromViewModel(SeriesVotingViewModel vm)
+        {
+            return new SeriesVoting()
+            {
+                Id = BsonTools.ResolveObjectId(vm.Id),
+                VoterName = vm.VoterName,
+                SeasonId = BsonTools.ResolveObjectId(vm.SeasonId),
+                SeriesId = BsonTools.ResolveObjectId(vm.SeriesId),
+                Tiers = TierVoting.FromViewModel(vm.Tiers)
             };
         } 
         #endregion

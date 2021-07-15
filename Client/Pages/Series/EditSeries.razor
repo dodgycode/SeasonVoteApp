@@ -12,7 +12,7 @@
 
     <br />
 
-    @foreach (var tier in currentSeries.Tiers)
+    @foreach (var tier in currentSeries.Tiers.OrderBy(t=>t.Order))
     {
         <MatCard>
             <MatCardContent @onclick="()=> EditTier(tier)">
@@ -57,10 +57,13 @@
 
     private void AddTier()
     {
+        var tierNumber = currentSeries.Tiers.Count + 1;
+        var lastOrder = currentSeries.Tiers.Select(t => t.Order).Max();
         currentSeries.Tiers.Add(new ScheduleTierViewModel
         {
-            Name = $"Tier {currentSeries.Tiers.Count + 1}",
+            Name = $"Tier {tierNumber}",
             NumberToBeSelected = 3,
+            Order = lastOrder + 1,
             Tracks = new List<ScheduleTrackViewModel>()
         });
 

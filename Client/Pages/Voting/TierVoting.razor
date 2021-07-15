@@ -38,9 +38,6 @@
     }
 </MatPaper>
 
-<SnackBarMessage Message="@tooManySeletionsMessage" Show="@showTooManySelectionsError" />
-
-
 @functions{
     [Parameter]
     public TierVotingViewModel Tier { get; set; }
@@ -65,15 +62,6 @@
             // add the track
             var highestOrder = Tier.Tracks.Select(t => t.Order).Max();
             if (highestOrder == null) { highestOrder = 0; }
-            if (highestOrder == Tier.Rules.NumberToBeVotedOn)
-            {
-                // Already selected as many as possible
-                selectedTracks = selectedTracks.Take(selectedTracks.Count() - 1).ToArray();
-                tooManySeletionsMessage = $"You cannot select more than {Tier.Rules.NumberToBeVotedOn} tracks for {Tier.Name}";
-                showTooManySelectionsError = true;
-            }
-            else
-            {
                 var votingTrack = new TrackVotingViewModel
                 {
                     Name = track.Name,
@@ -81,7 +69,6 @@
                     Order = highestOrder + 1
                 };
                 Tier.Tracks.Add(votingTrack);
-            }
         }
     }
 

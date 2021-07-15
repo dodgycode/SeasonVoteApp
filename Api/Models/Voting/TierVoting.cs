@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using SeasonVoting.Api.Models.Preparation;
+using SeasonVoting.Api.StaticClasses;
 using SeasonVoting.Shared.Voting;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ namespace SeasonVoting.Api.Models.Voting
         public ObjectId TierId { get; set; }
 
         public string Name { get; set; }
+
+        public int Order { get; set; }
 
         public List<TrackVoting> Tracks { get; set; }
 
@@ -41,6 +44,7 @@ namespace SeasonVoting.Api.Models.Voting
                 Id = ObjectId.GenerateNewId(),
                 TierId = scheduleTier.Id,
                 Name= scheduleTier.Name,
+                Order = scheduleTier.Order,
                 Tracks = new List<TrackVoting>()
             };
         }
@@ -51,7 +55,7 @@ namespace SeasonVoting.Api.Models.Voting
             foreach(var tier in tiers)
             {
                 var scheduleTier = scheduleTrackTiers.FirstOrDefault(t => t.Id == tier.TierId);
-                vms.Add(TierVoting.ToViewModel(tier, scheduleTier));
+                vms.Add(ToViewModel(tier, scheduleTier));
             }
             return vms;
         }
@@ -64,7 +68,31 @@ namespace SeasonVoting.Api.Models.Voting
                 TierId = tier.Id.ToString(),
                 Name = tier.Name,
                 Tracks = TrackVoting.ToViewModel(tier.Tracks),
+                Order = tier.Order,
                 Rules = ScheduleTrackTier.ToViewModel(scheduleTrackTier)
+            };
+        }
+
+        internal static List<TierVoting> FromViewModel(List<TierVotingViewModel> tiers)
+        {
+            var tierVotings = new List<TierVoting>();
+            foreach(var tier in tiers)
+            {
+                tierVotings.Add(FromViewModel(tier));
+            }
+
+            return tierVotings;
+        }
+
+        private static TierVoting FromViewModel(TierVotingViewModel tierVm)
+        {
+            return new TierVoting
+            {
+                Id = BsonTools.ResolveObjectId(tierVm.Id),
+                Order = tierVm.Order,
+                Name = tierVm.Name,
+                TierId = BsonTools.ResolveObjectId(tierVm.TierId),
+                Tracks = TrackVoting.FromViewModel(tierVm.Tracks)
             };
         }
         #endregion

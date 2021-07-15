@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using SeasonVoting.Api.Models.Preparation;
+using SeasonVoting.Api.StaticClasses;
 using SeasonVoting.Shared.Voting;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,26 @@ namespace SeasonVoting.Api.Models.Voting
                 Name = track.Name,
                 Order = track.Order,
                 TrackId = track.TrackId.ToString()
+            };
+        }
+
+        internal static List<TrackVoting> FromViewModel(List<TrackVotingViewModel> tracks)
+        {
+            var trackVotings = new List<TrackVoting>();
+            foreach(var track in tracks)
+            {
+                trackVotings.Add(FromViewModel(track));
+            }
+            return trackVotings;
+        }
+
+        private static TrackVoting FromViewModel(TrackVotingViewModel vm)
+        {
+            return new TrackVoting
+            {
+                Name = vm.Name,
+                TrackId = BsonTools.ResolveObjectId(vm.TrackId),
+                Order = vm.Order
             };
         }
         #endregion

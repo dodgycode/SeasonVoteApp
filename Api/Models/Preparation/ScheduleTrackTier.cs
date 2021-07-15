@@ -14,6 +14,7 @@ namespace SeasonVoting.Api.Models.Preparation
 
         [BsonRequired]
         public string Name { get; set; }
+        public int Order { get; set; }
 
         public List<ScheduleTrack> Tracks { get; set; } = new List<ScheduleTrack>();
 
@@ -66,6 +67,7 @@ namespace SeasonVoting.Api.Models.Preparation
             {
                 Id = BsonTools.ResolveObjectId(tier.Id).ToString(),
                 Name = tier.Name,
+                Order = tier.Order,
                 NumberToBeSelected = tier.NumberToBeSelected,
                 NumberToBeVotedOn = tier.NumberToBeVotedOn,
                 MaxSeasonsTrackCanRunPerYear = tier.MaxSeasonsTrackCanRunPerYear,
@@ -94,6 +96,7 @@ namespace SeasonVoting.Api.Models.Preparation
             {
                 Id = BsonTools.ResolveObjectId(vm.Id),
                 Name = vm.Name,
+                Order = vm.Order,
                 NumberToBeSelected = vm.NumberToBeSelected,
                 NumberToBeVotedOn = vm.NumberToBeVotedOn,
                 MaxSeasonsTrackCanRunPerYear = vm.MaxSeasonsTrackCanRunPerYear,

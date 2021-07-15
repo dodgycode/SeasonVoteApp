@@ -9,6 +9,7 @@
     <EditForm Model="@currentTier">
 
         <MatTextField Label="Tier Name" @bind-Value="currentTier.Name" />
+        <MatNumericUpDownField Label="Order" @bind-Value="currentTier.Order" />
         <MatNumericUpDownField Label="Tracks to be selected in tier" @bind-Value="currentTier.NumberToBeSelected" />
         <MatNumericUpDownField Label="Number of tracks each voter should select" @bind-Value="currentTier.NumberToBeVotedOn" />
         <MatNumericUpDownField Label="Max seasons track can run in a year" @bind-Value="currentTier.MaxSeasonsTrackCanRunPerYear" />

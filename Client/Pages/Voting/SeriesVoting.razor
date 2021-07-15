@@ -11,10 +11,14 @@
 }
 else
 {
-    @foreach (var tier in currentVoting.Tiers)
+    @foreach (var tier in currentVoting.Tiers.OrderBy(t => t.Order))
     {
-        <TierVoting Tier="@tier"/>
+        <TierVoting Tier="@tier" />
         <br />
+    } 
+    @if (ReadyToSubmit())
+    {
+        <MatButton @onclick="Submit">Submit your vote(s)!</MatButton>
     }
 }
 
@@ -23,13 +27,6 @@ else
     public string SeriesId { get; set; }
     private string voterName;
     private SeriesVotingViewModel currentVoting;
-    private bool showTooManySelectionsError = false;
-    private string tooManySeletionsMessage;
-
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    await GetCurrentSeries();
-    //}
 
     private async Task CreateBallot()
     {
@@ -44,19 +41,22 @@ else
         }
     }
 
-    private void ValidateSelections(TierVotingViewModel tier, TrackVotingViewModel track)
+    private async Task Submit()
     {
-        var selectedTracks = tier.Tracks.Where(t => t.Order != null);
-        if (selectedTracks.Count() >= tier.Rules.NumberToBeVotedOn)
+        try
         {
-            // Already selected as many as possible
-            tooManySeletionsMessage = $"You cannot select more than {tier.Rules.NumberToBeVotedOn} tracks for {tier.Name}";
-            showTooManySelectionsError = true;
+            await Http.PostAsJsonAsync<SeriesVotingViewModel>($"/api/Voting/SubmitVote", currentVoting);
         }
-        else
+        catch (Exception ex)
         {
-            track.Order = 1;
+            Console.WriteLine(ex.ToString());
         }
-
     }
+
+    private bool ReadyToSubmit()
+    {
+        var ready = currentVoting.Tiers.All(t => t.VotingComplete);
+        return ready;
+    }
+
 }

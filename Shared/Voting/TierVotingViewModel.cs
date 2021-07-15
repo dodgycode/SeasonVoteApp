@@ -10,6 +10,7 @@ namespace SeasonVoting.Shared.Voting
         public string TierId { get; set; }
         
         public string Name { get; set; }
+        public int Order { get; set; }
 
         public List<TrackVotingViewModel> Tracks { get; set; }
 
@@ -17,19 +18,24 @@ namespace SeasonVoting.Shared.Voting
 
         public string PleaseSelectXManyTracksMessage()
         {
-            var votesRemaining = Rules.NumberToBeVotedOn - Tracks.Count;
             string message = null;
-            if (votesRemaining > 0)
-            {
-                message = $"Please select {votesRemaining} ";
-                var tracks = votesRemaining > 1 ? "tracks." : "track.";
-                message += tracks;
-            }
-            else
+            if (VotingComplete)
             {
                 message = "You have completed voting for this tier.";
             }
+            else
+            {
+                var votesRemaining = Rules.NumberToBeVotedOn - Tracks.Count;
+                if (votesRemaining > 0)
+                {
+                    message = $"Please select {votesRemaining} ";
+                    var tracks = votesRemaining > 1 ? "tracks." : "track.";
+                    message += tracks;
+                }
+            }
             return message;
         }
+
+        public bool VotingComplete => Rules.NumberToBeVotedOn == Tracks.Count;
     }
 }
