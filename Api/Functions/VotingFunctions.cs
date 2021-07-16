@@ -47,6 +47,10 @@ namespace SeasonVoting.Api.Functions
 
             // Check voter hasn't already cast vote
             var previousVote = votingService.GetBySeriesAndVoter(seriesObjectId, vm.VoterName);
+            if (previousVote!=null)
+            {
+                throw new VoteAlreadyCastException("You have already voted in this series this seaon.");
+            }
 
             // Add the ballot!
             votingService.Create(seriesVoting);

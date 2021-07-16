@@ -41,6 +41,8 @@
 @functions{
     [Parameter]
     public TierVotingViewModel Tier { get; set; }
+    [Parameter]
+    public EventCallback OnVoting { get; set; }
 
     private bool showTooManySelectionsError = false;
     private string tooManySeletionsMessage;
@@ -62,14 +64,16 @@
             // add the track
             var highestOrder = Tier.Tracks.Select(t => t.Order).Max();
             if (highestOrder == null) { highestOrder = 0; }
-                var votingTrack = new TrackVotingViewModel
-                {
-                    Name = track.Name,
-                    TrackId = track.TrackId,
-                    Order = highestOrder + 1
-                };
-                Tier.Tracks.Add(votingTrack);
+            var votingTrack = new TrackVotingViewModel
+            {
+                Name = track.Name,
+                TrackId = track.TrackId,
+                Order = highestOrder + 1
+            };
+            Tier.Tracks.Add(votingTrack);
         }
+
+        OnVoting.InvokeAsync();  
     }
 
     private void Clear()

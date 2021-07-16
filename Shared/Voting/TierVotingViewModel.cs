@@ -19,7 +19,7 @@ namespace SeasonVoting.Shared.Voting
         public string PleaseSelectXManyTracksMessage()
         {
             string message = null;
-            if (VotingComplete)
+            if (TierVotingComplete)
             {
                 message = "You have completed voting for this tier.";
             }
@@ -36,6 +36,6 @@ namespace SeasonVoting.Shared.Voting
             return message;
         }
 
-        public bool VotingComplete => Rules.NumberToBeVotedOn == Tracks.Count;
+        public bool TierVotingComplete => Rules.NumberToBeVotedOn == Tracks.Count;
     }
 }

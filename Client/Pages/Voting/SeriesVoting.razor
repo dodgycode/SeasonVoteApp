@@ -13,13 +13,16 @@ else
 {
     @foreach (var tier in currentVoting.Tiers.OrderBy(t => t.Order))
     {
-        <TierVoting Tier="@tier" />
+        <TierVoting Tier="@tier" OnVoting="OnVoteSelectedHandler" />
         <br />
-    } 
-    @if (ReadyToSubmit())
-    {
-        <MatButton @onclick="Submit">Submit your vote(s)!</MatButton>
     }
+
+    @if (votingIsComplete)
+    {
+        <MatButton @onclick="Submit">Submit your vote!</MatButton>
+    }
+
+    <SnackBarMessage Show="@showSnackBar" Message="@snackBarMessage" />
 }
 
 @code {
@@ -27,6 +30,9 @@ else
     public string SeriesId { get; set; }
     private string voterName;
     private SeriesVotingViewModel currentVoting;
+    private bool votingIsComplete;
+    private bool showSnackBar;
+    private string snackBarMessage;
 
     private async Task CreateBallot()
     {
@@ -47,16 +53,21 @@ else
         {
             await Http.PostAsJsonAsync<SeriesVotingViewModel>($"/api/Voting/SubmitVote", currentVoting);
         }
+        catch (VoteAlreadyCastException vace)
+        {
+            snackBarMessage = vace.Message;
+            showSnackBar = true;
+        }
         catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
         }
     }
 
-    private bool ReadyToSubmit()
+    private void OnVoteSelectedHandler()
     {
-        var ready = currentVoting.Tiers.All(t => t.VotingComplete);
-        return ready;
+        votingIsComplete = currentVoting.Tiers.All(t => t.TierVotingComplete);
     }
+
 
 }
