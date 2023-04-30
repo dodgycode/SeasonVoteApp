@@ -3,7 +3,7 @@
     public static class EnumTools
     {
         #region ToViewModel
-        public static string ToViewModel(TrackAvailability availability)
+        public static string ToViewModel(this TrackAvailability availability)
         {
             string vm;
 
