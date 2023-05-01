@@ -1,0 +1,5 @@
+<h2>Current Series:</h2>
+<div *ngFor="let series of currentSeries$ | async">
+  <p> {{ series.name }} </p>  
+  <p> {{ series.description }} </p>
+</div>
