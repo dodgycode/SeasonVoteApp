@@ -27,18 +27,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-1
       - name: S3 Deploy
-        uses: Reggionick/s3-deploy@v3.2.0 
-        with:
-          folder: /dist/NgxClient
-          bucket: ${{ secrets.S3_BUCKET }}
-          bucket-region: ap-southeast-2 
-          delete-removed: true
-          no-cache: true
-          private: true
-          filesToInclude: ".*/*,*/*,**"
+        uses: jakejarvis/s3-sync-action@master 
         env:
+          AWS_S3_BUCKET: ${{ secrets.S3_BUCKET }}
           AWS_DEFAULT_REGION: ap-southeast-2
           AWS_REGION: ap-southeast-2
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SOURCE_DIR: /dist/NgxClient
 
