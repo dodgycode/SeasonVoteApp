@@ -35,7 +35,7 @@ jobs:
           delete-removed: true
           no-cache: true
           private: true
-          files-to-include: ".*/*,*/*,**"
+          filesToInclude: ".*/*,*/*,**"
         env:
           AWS_DEFAULT_REGION: ap-southeast-2
           AWS_REGION: ap-southeast-2
