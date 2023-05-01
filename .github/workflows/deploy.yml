@@ -29,7 +29,7 @@ jobs:
       - name: S3 Deploy
         uses: Reggionick/s3-deploy@v3.2.0 
         with:
-          folder: dist
+          folder: /dist/NgxClient
           bucket: ${{ secrets.S3_BUCKET }}
           bucket-region: ap-southeast-2 
           delete-removed: true
