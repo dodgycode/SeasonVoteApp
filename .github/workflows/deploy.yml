@@ -31,7 +31,11 @@ jobs:
         with:
           folder: dist
           bucket: ${{ secrets.S3_BUCKET }}
-          bucket-region: ap-southeast-2
+          bucket-region: ap-southeast-2 
+          delete-removed: true
+          no-cache: true
+          private: true
+          files-to-include: ".*/*,*/*,**"
         env:
           AWS_DEFAULT_REGION: ap-southeast-2
           AWS_REGION: ap-southeast-2
