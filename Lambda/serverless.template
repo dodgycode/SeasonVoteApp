@@ -5,13 +5,13 @@
   "Parameters" : {
   },
   "Resources" : {
-    "DefaultFunction" : {
+    "GetCurrentSeries" : {
       "Type" : "AWS::Serverless::Function",
       "Properties": {
-        "Handler": "Lambda::SeriesFunctions::<METHOD-NAME>",
+        "Handler": "Lambda::SeriesFunctions::GetCurrentSeries",
         "Runtime": "dotnetcore2.1",
         "CodeUri": "",
-        "Description": "Default function",
+        "Description": "Get Current Series",
         "MemorySize": 256,
         "Timeout": 30,
         "Role": null,

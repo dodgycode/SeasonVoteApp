@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lambda", "Lambda\Lambda.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lambda.Tests", "Lambda.Tests\Lambda.Tests.csproj", "{9D1E520C-4440-48D8-805B-E48A128092B4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetCurrentSeries", "GetCurrentSeries\GetCurrentSeries.csproj", "{12843CA0-C084-4548-936B-8FB62EE7D4C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{9D1E520C-4440-48D8-805B-E48A128092B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D1E520C-4440-48D8-805B-E48A128092B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D1E520C-4440-48D8-805B-E48A128092B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12843CA0-C084-4548-936B-8FB62EE7D4C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12843CA0-C084-4548-936B-8FB62EE7D4C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12843CA0-C084-4548-936B-8FB62EE7D4C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12843CA0-C084-4548-936B-8FB62EE7D4C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
