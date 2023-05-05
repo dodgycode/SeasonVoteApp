@@ -1,6 +1,7 @@
 <h2>Current Series:</h2>
 
-<div *ngFor="let series of currentSeries$ | async">
+<div *ngFor="let series of currentSeries">
+  {{ series.name }}
   <mat-card>
     <mat-card-title>{{ series.name }}</mat-card-title>
     <mat-card-content>{{ series.description }}</mat-card-content>

@@ -1,28 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable, ChangeDetectorRef } from '@angular/core';
 import { BehaviorSubject, combineLatest, merge, Observable, Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { } from '@angular/core';
 
 @Component({
   selector: 'app-series',
   templateUrl: './series.component.html',
   styleUrls: ['./series.component.less']
 })
-export class SeriesComponent implements OnInit {
-  currentSeries$ = new BehaviorSubject<Series[]>([]);
-  constructor() { }
 
-  ngOnInit(): void {
-    this.currentSeries$.next(this.getSeries());
+export class SeriesComponent implements OnInit {
+  public currentSeries: Series[] = [];
+
+  constructor(private ref: ChangeDetectorRef, private httpClient: HttpClient) {
   }
 
-  getSeries(): Series[] {
-    var series: Series[] = ([]);
-    series.push({id: 1, name: "Formula Renault 3.5", description: "the best"})
-    return series;
+  ngOnInit(): void {
+    this.getSeries()
+      .subscribe((data) => {
+        this.currentSeries = data;
+        this.ref.detectChanges();
+      });
+  }
+
+  getSeries = (): Observable<Series[]> => {
+    const url = 'https://vt7oz4nqbdzdtzyqjko623age40eagha.lambda-url.ap-southeast-2.on.aws/';
+    return this.httpClient.get<Series[]>(url);
   }
 }
 
 export interface Series {
-  id: number;
+  id: string;
   name: string;
   description: string;
+  seasonId: string;
 }
