@@ -1,5 +1,5 @@
-import { Component, OnInit, Injectable, ChangeDetectorRef } from '@angular/core';
-import { BehaviorSubject, combineLatest, merge, Observable, Subject } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { } from '@angular/core';
 
@@ -12,14 +12,13 @@ import { } from '@angular/core';
 export class SeriesComponent implements OnInit {
   public currentSeries: Series[] = [];
 
-  constructor(private ref: ChangeDetectorRef, private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient) {
   }
 
   ngOnInit(): void {
     this.getSeries()
       .subscribe((data) => {
         this.currentSeries = data;
-        this.ref.detectChanges();
       });
   }
 
@@ -30,8 +29,8 @@ export class SeriesComponent implements OnInit {
 }
 
 export interface Series {
-  id: string;
-  name: string;
-  description: string;
-  seasonId: string;
+  Id: string;
+  Name: string;
+  Description: string;
+  SeasonId: string;
 }
