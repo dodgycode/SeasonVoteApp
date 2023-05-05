@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetCurrentSeries", "GetCurr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lambdas", "Lambdas", "{7D1AEC19-6A82-4474-A3E1-E829488709B6}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialiseSeries", "InitialiseSeries\InitialiseSeries.csproj", "{2422EB76-4869-450E-B0A7-9325CD65612B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,12 +37,17 @@ Global
 		{12843CA0-C084-4548-936B-8FB62EE7D4C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12843CA0-C084-4548-936B-8FB62EE7D4C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12843CA0-C084-4548-936B-8FB62EE7D4C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2422EB76-4869-450E-B0A7-9325CD65612B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2422EB76-4869-450E-B0A7-9325CD65612B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2422EB76-4869-450E-B0A7-9325CD65612B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2422EB76-4869-450E-B0A7-9325CD65612B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{12843CA0-C084-4548-936B-8FB62EE7D4C8} = {7D1AEC19-6A82-4474-A3E1-E829488709B6}
+		{2422EB76-4869-450E-B0A7-9325CD65612B} = {7D1AEC19-6A82-4474-A3E1-E829488709B6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8F168B5D-DFC0-4455-A66D-9D65AECF0C88}
