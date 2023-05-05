@@ -24,12 +24,12 @@ public class Function
     {
         return new List<Series>
         {
-            new Series
-            {
-                Name = "Formula Renault 3.5",
-                Discipline = SeriesDiscipline.Road.AsString(EnumFormat.Description),
-                Description = "Where Ricciardo made his start. And others."
-            },
+            //new Series
+            //{
+            //    Name = "Formula Renault 3.5",
+            //    Discipline = SeriesDiscipline.Road.AsString(EnumFormat.Description),
+            //    Description = "Where Ricciardo made his start. And others."
+            //},
             new Series
             {
                 Name = "Skippy",
