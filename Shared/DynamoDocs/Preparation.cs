@@ -6,29 +6,17 @@ namespace SeasonVoting.Shared.DynamoDocs
     [DynamoDBTable("SeasonVoting_Preparation")]
     public class Preparation
     {
-        [DynamoDBHashKey] public string Id { get; private set; } // Should be in format "SeasonName+SeriesName
-        [DynamoDBProperty] public string Series { get; set; }
-        [DynamoDBRangeKey] public string Season { get; set; }
+        [DynamoDBHashKey] public string Season { get; set; }
+        [DynamoDBRangeKey] public string Series { get; set; }
 
         public List<PreparationTier> Tiers { get; set; } = new List<PreparationTier>();
         
-        #region Constructors
-
-        public Preparation(string seriesName, string seasonName)
-        {
-            Id = seriesName + "+" + seasonName;
-            Series = seriesName;
-            Season = seasonName;
-        }
-
-        public Preparation() { }
-
-        #endregion
-
         public static Preparation Example()
         {
-            return new Preparation("Formula Renault 3.5", "2023_S2")
+            return new Preparation()
             {
+                Season = "2023_S2",
+                Series = "Formula Renault 3.5",
                 Tiers = new List<PreparationTier>()
                 {
                     new PreparationTier()
