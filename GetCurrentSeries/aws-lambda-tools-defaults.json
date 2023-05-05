@@ -10,7 +10,7 @@
   "configuration": "Release",
   "function-architecture": "x86_64",
   "function-runtime": "dotnet6",
-  "function-memory-size": 128,
+  "function-memory-size": 256,
   "function-timeout": 30,
   "function-handler": "GetCurrentSeries::GetCurrentSeries.Function::FunctionHandler",
   "function-name": "GetCurrentSeries",

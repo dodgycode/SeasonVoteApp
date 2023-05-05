@@ -17,11 +17,7 @@ public class Function
     {
         var allSeries = GetSeries();
         var dynamoDBContext = new DynamoDBContext(_client);
-
-        foreach (var series in allSeries)
-        {
-            await dynamoDBContext.SaveAsync(series);
-        }
+        await dynamoDBContext.SaveAsync(allSeries);
     }
 
     private List<Series> GetSeries()
@@ -32,7 +28,19 @@ public class Function
             {
                 Name = "Formula Renault 3.5",
                 Discipline = SeriesDiscipline.Road.AsString(EnumFormat.Description),
-                Description = "Where Ricciardo made his start"
+                Description = "Where Ricciardo made his start. And others."
+            },
+            new Series
+            {
+                Name = "Skippy",
+                Discipline = SeriesDiscipline.Road.AsString(EnumFormat.Description),
+                Description = "The bush kangaroo"
+            },
+            new Series
+            {
+                Name = "NASCAR",
+                Discipline = SeriesDiscipline.Oval.AsString(EnumFormat.Description),
+                Description = "Rednecks and bump drafts"
             }
         };
     }
