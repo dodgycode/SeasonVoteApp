@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.102.31" />
+    <PackageReference Include="Enums.NET" Version="4.0.1" />
     <PackageReference Include="MongoDB.Bson" Version="2.12.3" />
   </ItemGroup>
 

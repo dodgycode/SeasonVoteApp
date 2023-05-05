@@ -6,7 +6,7 @@ using SeasonVoting.Shared.DynamoDocs;
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
-namespace InitialiseSeries;
+namespace SaveSeriesPrep;
 
 public class Function
 {
@@ -14,12 +14,8 @@ public class Function
 
     public async Task FunctionHandler(ILambdaContext context)
     {
-        var allSeries = Series.AllSeries();
+        var example = Preparation.Example();
         var dynamoDBContext = new DynamoDBContext(_client);
-        foreach (var series in allSeries)
-        {
-            await dynamoDBContext.SaveAsync(series);
-        }
-    }   
+        await dynamoDBContext.SaveAsync(example);
+    }
 }
-
