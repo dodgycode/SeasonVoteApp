@@ -11,6 +11,8 @@ namespace SeasonVoting.Shared.DynamoDocs
         [DynamoDBRangeKey] public string Season { get; set; }
 
         public List<PreparationTier> Tiers { get; set; } = new List<PreparationTier>();
+        
+        #region Constructors
 
         public Preparation(string seriesName, string seasonName)
         {
@@ -18,6 +20,10 @@ namespace SeasonVoting.Shared.DynamoDocs
             Series = seriesName;
             Season = seasonName;
         }
+
+        public Preparation() { }
+
+        #endregion
 
         public static Preparation Example()
         {
