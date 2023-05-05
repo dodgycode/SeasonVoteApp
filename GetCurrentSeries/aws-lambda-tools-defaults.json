@@ -13,5 +13,6 @@
   "function-memory-size": 256,
   "function-timeout": 30,
   "function-handler": "GetCurrentSeries::GetCurrentSeries.Function::FunctionHandler",
-  "function-name":  "GetCurrentSeries"
+  "function-name": "GetCurrentSeries",
+  "function-role": "SeasonVotingLambdaRole"
 }
