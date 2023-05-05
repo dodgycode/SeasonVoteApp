@@ -26,11 +26,13 @@ export class SeriesComponent implements OnInit {
     const url = 'https://vt7oz4nqbdzdtzyqjko623age40eagha.lambda-url.ap-southeast-2.on.aws/';
     return this.httpClient.get<Series[]>(url);
   }
+
+  public edit = (series: Series): void => {
+    console.log('button clicked');
+  }
 }
 
 export interface Series {
-  Id: string;
-  Name: string;
-  Description: string;
-  SeasonId: string;
+  Series: string;
+  Season: string;
 }

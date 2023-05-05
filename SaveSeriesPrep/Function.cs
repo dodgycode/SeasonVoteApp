@@ -17,5 +17,11 @@ public class Function
         var example = Preparation.Example();
         var dynamoDBContext = new DynamoDBContext(_client);
         await dynamoDBContext.SaveAsync(example);
+
+        example.Series = "VRS GT3 Sprint";
+        await dynamoDBContext.SaveAsync(example);
+
+        example.Series = "Skippy";
+        await dynamoDBContext.SaveAsync(example);
     }
 }

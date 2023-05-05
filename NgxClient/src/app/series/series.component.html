@@ -2,8 +2,9 @@
 
 <div *ngFor="let series of currentSeries">
   <mat-card>
-    <mat-card-title>{{ series.Name }}</mat-card-title>
-    <mat-card-content>{{ series.Description }}</mat-card-content>
+    <mat-card-title>{{ series.Series }}</mat-card-title>
+    <mat-card-content>{{ series.Season }}</mat-card-content>
+    <button mat-button (click)="edit(series)">Edit</button>
   </mat-card>
 <br/>
 </div>

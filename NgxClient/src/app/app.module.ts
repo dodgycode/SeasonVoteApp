@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { SeasonComponent } from './season/season.component';
 import { SeriesComponent } from './series/series.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCardModule } from '@angular/material/card'
+import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -19,7 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatCardModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
