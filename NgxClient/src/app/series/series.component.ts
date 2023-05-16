@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-series',
@@ -12,7 +12,7 @@ import { } from '@angular/core';
 export class SeriesComponent implements OnInit {
   public currentSeries: Series[] = [];
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private router: Router, private httpClient: HttpClient) {
   }
 
   ngOnInit(): void {
@@ -28,7 +28,7 @@ export class SeriesComponent implements OnInit {
   }
 
   public edit = (series: Series): void => {
-    console.log('button clicked');
+   // this.router.navigate(['/series-edit'])
   }
 }
 

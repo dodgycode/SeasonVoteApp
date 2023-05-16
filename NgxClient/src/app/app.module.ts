@@ -6,20 +6,25 @@ import { SeasonComponent } from './season/season.component';
 import { SeriesComponent } from './series/series.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
+import { SeriesEditComponent } from './series-edit/series-edit.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler';
 
 @NgModule({
   declarations: [
     AppComponent,
     SeasonComponent,
-    SeriesComponent
+    SeriesComponent,
+    SeriesEditComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatCardModule
+    MatCardModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
