@@ -28,7 +28,7 @@ export class SeriesComponent implements OnInit {
   }
 
   public edit = (series: Series): void => {
-   // this.router.navigate(['/series-edit'])
+   this.router.navigate(['/series/edit'])
   }
 }
 

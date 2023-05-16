@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { SeriesEditComponent } from './series-edit/series-edit.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler';
+import { provideRoutes } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler';
     MatCardModule,
     MatButtonModule,
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

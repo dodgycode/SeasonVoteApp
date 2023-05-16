@@ -5,10 +5,10 @@ import { SeriesComponent } from './series/series.component';
 import { SeasonComponent } from './season/season.component';
 
 const routes: Routes = [
-  {path: 'series/edit', component: SeriesEditComponent},
-  {path: 'series', component: SeriesComponent},
-  {path: 'season', component: SeasonComponent},
-  {path: '**', component: SeriesComponent},
+  { path: 'series/edit', component: SeriesEditComponent },
+  { path: 'series', component: SeriesComponent  },
+  { path: 'season', component: SeasonComponent },
+  { path: '', component: SeriesComponent },
 ];
 
 @NgModule({

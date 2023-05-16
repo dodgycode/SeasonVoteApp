@@ -4,7 +4,7 @@
   <mat-card>
     <mat-card-title>{{ series.Series }}</mat-card-title>
     <mat-card-content>{{ series.Season }}</mat-card-content>
-    <button mat-button color="primary" routerLink="/series/edit" routerLinkActive="active" ariaCurrentWhenActive="page">Edit</button>
+    <button mat-button color="primary" (click)="edit(series)">Edit</button>
   </mat-card>
 <br/>
 </div>
