@@ -9,8 +9,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { SeriesEditComponent } from './series-edit/series-edit.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler';
-import { provideRoutes } from '@angular/router';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { ProfileComponent } from './profile/profile.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,12 @@ import { provideRoutes } from '@angular/router';
     SeasonComponent,
     SeriesComponent,
     SeriesEditComponent,
+    SignUpComponent,
+    SignInComponent,
+    ProfileComponent,
+    ProfileComponent,
+    SignInComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,6 +34,7 @@ import { provideRoutes } from '@angular/router';
     HttpClientModule,
     MatCardModule,
     MatButtonModule,
+    FormsModule,
   ],
   providers: [
   ],

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Routes, RouterModule, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-series',
