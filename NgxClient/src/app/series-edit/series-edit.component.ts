@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Series } from '../series/series.component';
 
 @Component({
@@ -7,9 +9,12 @@ import { Series } from '../series/series.component';
   styleUrls: ['./series-edit.component.less']
 })
 export class SeriesEditComponent implements OnInit {
-  series: Series = {Series: "Poop Series", Season: "Current Season"};
-
-  constructor() { }
+  series: Series;
+  constructor(
+    private router: Router
+  ) {
+    this.series = this.router.getCurrentNavigation()?.extras?.state?.series;
+   }
 
   ngOnInit(): void {
   }
